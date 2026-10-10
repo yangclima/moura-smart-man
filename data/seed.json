@@ -1,0 +1,2762 @@
+{
+  "maquinas": [
+    {
+      "id": "A",
+      "nome": "Máquina A",
+      "tag": "9001.FABX.CEL01.MAQA",
+      "linha": "CEL01",
+      "impacto": "gargalo",
+      "impactoValor": 1.0,
+      "ativo": true
+    },
+    {
+      "id": "B",
+      "nome": "Máquina B",
+      "tag": "9001.FABX.CEL02.MAQB",
+      "linha": "CEL02",
+      "impacto": "sem_redundancia",
+      "impactoValor": 0.7,
+      "ativo": true
+    },
+    {
+      "id": "C",
+      "nome": "Máquina C",
+      "tag": "9001.FABX.CEL03.MAQC",
+      "linha": "CEL03",
+      "impacto": "sem_redundancia",
+      "impactoValor": 0.7,
+      "ativo": true
+    },
+    {
+      "id": "D",
+      "nome": "Máquina D",
+      "tag": "9001.FABX.CEL04.MAQD",
+      "linha": "CEL04",
+      "impacto": "sem_redundancia",
+      "impactoValor": 0.7,
+      "ativo": true
+    }
+  ],
+  "subdivisoes": [
+    {
+      "id": "A-AQUECIMENTO",
+      "maquinaId": "A",
+      "nome": "AQUECIMENTO",
+      "ordem": 0,
+      "critHist": 0.9,
+      "componentes": [
+        "RDFD",
+        "CLH",
+        "FBPB",
+        "NVCLH",
+        "FQCO",
+        "FTEMP",
+        "LOF",
+        "BCLH",
+        "BDR",
+        "QMDCF",
+        "LOBSOP",
+        "VARCON"
+      ]
+    },
+    {
+      "id": "A-DISCO",
+      "maquinaId": "A",
+      "nome": "DISCO",
+      "ordem": 1,
+      "critHist": 0.55,
+      "componentes": [
+        "BCL",
+        "DS",
+        "LC",
+        "DI",
+        "GRAL",
+        "EDCRT",
+        "ALT",
+        "GDE",
+        "GENTD",
+        "RMPELE",
+        "PCTDR",
+        "ESTRT"
+      ]
+    },
+    {
+      "id": "A-ESTACAO-FIM",
+      "maquinaId": "A",
+      "nome": "ESTACAO FIM",
+      "ordem": 2,
+      "critHist": 0.35,
+      "componentes": [
+        "MDBOB"
+      ]
+    },
+    {
+      "id": "A-FACAO",
+      "maquinaId": "A",
+      "nome": "FACAO",
+      "ordem": 3,
+      "critHist": 0.21,
+      "componentes": [
+        "MELE",
+        "BHDR"
+      ]
+    },
+    {
+      "id": "A-FORNO-1",
+      "maquinaId": "A",
+      "nome": "FORNO 1",
+      "ordem": 4,
+      "critHist": 0.45,
+      "componentes": [
+        "QMD"
+      ]
+    },
+    {
+      "id": "A-FORNO-2",
+      "maquinaId": "A",
+      "nome": "FORNO 2",
+      "ordem": 5,
+      "critHist": 0.12,
+      "componentes": [
+        "BPB",
+        "QMDSP"
+      ]
+    },
+    {
+      "id": "A-LONAS",
+      "maquinaId": "A",
+      "nome": "LONAS",
+      "ordem": 6,
+      "critHist": 0.51,
+      "componentes": [
+        "EXESD",
+        "LONA",
+        "REST",
+        "FELET"
+      ]
+    },
+    {
+      "id": "A-MECANISMO",
+      "maquinaId": "A",
+      "nome": "MECANISMO",
+      "ordem": 7,
+      "critHist": 0.35,
+      "componentes": [
+        "CRDNF",
+        "FELET"
+      ]
+    },
+    {
+      "id": "A-ROLOS",
+      "maquinaId": "A",
+      "nome": "ROLOS",
+      "ordem": 8,
+      "critHist": 0.75,
+      "componentes": [
+        "RMPF",
+        "FD",
+        "ESP",
+        "LMDTR",
+        "FDRV",
+        "GDE",
+        "HABLAM"
+      ]
+    },
+    {
+      "id": "B-ALIMENTADOR",
+      "maquinaId": "B",
+      "nome": "ALIMENTADOR",
+      "ordem": 0,
+      "critHist": 0.66,
+      "componentes": [
+        "ALM-COR",
+        "ALM-SEN",
+        "ALM-MOT",
+        "ALM-GUI",
+        "ALM-ENC"
+      ]
+    },
+    {
+      "id": "B-EXTRACAO",
+      "maquinaId": "B",
+      "nome": "EXTRACAO",
+      "ordem": 1,
+      "critHist": 0.47,
+      "componentes": [
+        "EXT-MAN",
+        "EXT-MOT",
+        "EXT-ACPL",
+        "EXT-SEN"
+      ]
+    },
+    {
+      "id": "B-GUIAMENTO",
+      "maquinaId": "B",
+      "nome": "GUIAMENTO",
+      "ordem": 2,
+      "critHist": 0.57,
+      "componentes": [
+        "GUI-SRV",
+        "GUI-SEN",
+        "GUI-FUS",
+        "GUI-BAT"
+      ]
+    },
+    {
+      "id": "B-HIDRAULICA",
+      "maquinaId": "B",
+      "nome": "HIDRAULICA",
+      "ordem": 3,
+      "critHist": 0.61,
+      "componentes": [
+        "HID-BMB",
+        "HID-VLV",
+        "HID-FLT",
+        "HID-MNG"
+      ]
+    },
+    {
+      "id": "B-MESA-TRANSFERENCIA",
+      "maquinaId": "B",
+      "nome": "MESA TRANSFERENCIA",
+      "ordem": 4,
+      "critHist": 0.29,
+      "componentes": [
+        "MTR-COR",
+        "MTR-SEN",
+        "MTR-MOT",
+        "MTR-GUI"
+      ]
+    },
+    {
+      "id": "B-PRENSA",
+      "maquinaId": "B",
+      "nome": "PRENSA",
+      "ordem": 5,
+      "critHist": 0.66,
+      "componentes": [
+        "PRS-CIL",
+        "PRS-GUI",
+        "PRS-VLV",
+        "PRS-ENC",
+        "PRS-SEN"
+      ]
+    },
+    {
+      "id": "B-SENSORAMENTO",
+      "maquinaId": "B",
+      "nome": "SENSORAMENTO",
+      "ordem": 6,
+      "critHist": 0.22,
+      "componentes": [
+        "SEN-CAB",
+        "SEN-IND",
+        "SEN-FOT",
+        "SEN-FNT"
+      ]
+    },
+    {
+      "id": "C-CENTRAL-LUBRIFICACAO",
+      "maquinaId": "C",
+      "nome": "CENTRAL LUBRIFICACAO",
+      "ordem": 0,
+      "critHist": 0.53,
+      "componentes": [
+        "LUB-DOS",
+        "LUB-LIN",
+        "LUB-BMB"
+      ]
+    },
+    {
+      "id": "C-CORTE-TRANSVERSAL",
+      "maquinaId": "C",
+      "nome": "CORTE TRANSVERSAL",
+      "ordem": 1,
+      "critHist": 0.4,
+      "componentes": [
+        "CTR-SEN",
+        "CTR-LAM",
+        "CTR-GUI",
+        "CTR-CIL"
+      ]
+    },
+    {
+      "id": "C-EMPILHADOR",
+      "maquinaId": "C",
+      "nome": "EMPILHADOR",
+      "ordem": 2,
+      "critHist": 0.46,
+      "componentes": [
+        "EMP-GUI",
+        "EMP-CIL",
+        "EMP-VLV",
+        "EMP-SEN"
+      ]
+    },
+    {
+      "id": "C-POSICIONADOR",
+      "maquinaId": "C",
+      "nome": "POSICIONADOR",
+      "ordem": 3,
+      "critHist": 0.54,
+      "componentes": [
+        "POS-SRV",
+        "POS-FUS",
+        "POS-SEN",
+        "POS-GUI"
+      ]
+    },
+    {
+      "id": "C-REFRIGERACAO",
+      "maquinaId": "C",
+      "nome": "REFRIGERACAO",
+      "ordem": 4,
+      "critHist": 0.74,
+      "componentes": [
+        "REF-SEN",
+        "REF-BMB",
+        "REF-TUB",
+        "REF-VLV"
+      ]
+    },
+    {
+      "id": "C-TRACIONADOR",
+      "maquinaId": "C",
+      "nome": "TRACIONADOR",
+      "ordem": 5,
+      "critHist": 0.69,
+      "componentes": [
+        "TRC-ACPL",
+        "TRC-MOT",
+        "TRC-RED",
+        "TRC-MAN"
+      ]
+    },
+    {
+      "id": "C-TRANSMISSAO",
+      "maquinaId": "C",
+      "nome": "TRANSMISSAO",
+      "ordem": 6,
+      "critHist": 0.74,
+      "componentes": [
+        "TRM-EIX",
+        "TRM-RED",
+        "TRM-ACPL",
+        "TRM-MAN"
+      ]
+    },
+    {
+      "id": "D-BASCULADOR",
+      "maquinaId": "D",
+      "nome": "BASCULADOR",
+      "ordem": 0,
+      "critHist": 0.36,
+      "componentes": [
+        "BAS-CIL",
+        "BAS-VLV",
+        "BAS-GUI",
+        "BAS-SEN"
+      ]
+    },
+    {
+      "id": "D-DOSADOR",
+      "maquinaId": "D",
+      "nome": "DOSADOR",
+      "ordem": 1,
+      "critHist": 0.78,
+      "componentes": [
+        "DOS-ATU",
+        "DOS-VLV",
+        "DOS-SEN",
+        "DOS-MOT"
+      ]
+    },
+    {
+      "id": "D-ELEVADOR",
+      "maquinaId": "D",
+      "nome": "ELEVADOR",
+      "ordem": 2,
+      "critHist": 0.53,
+      "componentes": [
+        "ELV-MAN",
+        "ELV-RED",
+        "ELV-COR",
+        "ELV-MOT"
+      ]
+    },
+    {
+      "id": "D-EXAUSTAO",
+      "maquinaId": "D",
+      "nome": "EXAUSTAO",
+      "ordem": 3,
+      "critHist": 0.44,
+      "componentes": [
+        "EXA-MAN",
+        "EXA-MOT",
+        "EXA-VNT",
+        "EXA-DMP"
+      ]
+    },
+    {
+      "id": "D-PAINEL-ELETRICO",
+      "maquinaId": "D",
+      "nome": "PAINEL ELETRICO",
+      "ordem": 4,
+      "critHist": 0.35,
+      "componentes": [
+        "PEL-CNT",
+        "PEL-RLE",
+        "PEL-FNT",
+        "PEL-CAB"
+      ]
+    },
+    {
+      "id": "D-ROSCA-SEM-FIM",
+      "maquinaId": "D",
+      "nome": "ROSCA SEM FIM",
+      "ordem": 5,
+      "critHist": 0.51,
+      "componentes": [
+        "RSF-MOT",
+        "RSF-MAN",
+        "RSF-EIX",
+        "RSF-RED"
+      ]
+    },
+    {
+      "id": "D-TRANSPORTADOR",
+      "maquinaId": "D",
+      "nome": "TRANSPORTADOR",
+      "ordem": 6,
+      "critHist": 0.77,
+      "componentes": [
+        "TRP-MAN",
+        "TRP-MOT",
+        "TRP-COR",
+        "TRP-SEN"
+      ]
+    },
+    {
+      "id": "D-VIBRADOR",
+      "maquinaId": "D",
+      "nome": "VIBRADOR",
+      "ordem": 7,
+      "critHist": 0.49,
+      "componentes": [
+        "VIB-EXC",
+        "VIB-MOT",
+        "VIB-FIX"
+      ]
+    }
+  ],
+  "erros": [
+    {
+      "id": "A-AQUECIMENTO-roda-ou-cinta-com-folga",
+      "maquinaId": "A",
+      "subdivisaoId": "A-AQUECIMENTO",
+      "nome": "Roda ou cinta com folga",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-AQUECIMENTO-soprador-sem-funcionar",
+      "maquinaId": "A",
+      "subdivisaoId": "A-AQUECIMENTO",
+      "nome": "Soprador sem funcionar",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-AQUECIMENTO-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-AQUECIMENTO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-AQUECIMENTO-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-AQUECIMENTO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-AQUECIMENTO-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-AQUECIMENTO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-AQUECIMENTO-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-AQUECIMENTO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-AQUECIMENTO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-AQUECIMENTO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-AQUECIMENTO-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-AQUECIMENTO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 7,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-disco-travado",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Disco travado",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-protecao-ou-guia-do-disco-danificada",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Proteção ou guia do disco danificada",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-disco-nao-liga",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Disco não liga",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 7,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-DISCO-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-DISCO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 8,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ESTACAO-FIM-rolo-folgado-na-estacao-fim",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ESTACAO-FIM",
+      "nome": "Rolo folgado na estação fim",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ESTACAO-FIM-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ESTACAO-FIM",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ESTACAO-FIM-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ESTACAO-FIM",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ESTACAO-FIM-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ESTACAO-FIM",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ESTACAO-FIM-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ESTACAO-FIM",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ESTACAO-FIM-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ESTACAO-FIM",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ESTACAO-FIM-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ESTACAO-FIM",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FACAO-lamina-do-facao-solta",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FACAO",
+      "nome": "Lâmina do facão solta",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FACAO-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FACAO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FACAO-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FACAO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FACAO-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FACAO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FACAO-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FACAO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FACAO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FACAO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FACAO-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FACAO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-falha-no-qmd",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Falha no QMD",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-transferencia-entupida",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Transferência entupida",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-chumbo-fora-da-temperatura-de-fusao",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Chumbo fora da temperatura de fusão",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 7,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-1-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-1",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 8,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-falha-no-qmd",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Falha no QMD",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-chama-apagada-sem-ignicao",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Chama apagada / sem ignição",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-bomba-sem-funcionar",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Bomba sem funcionar",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 7,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-FORNO-2-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-FORNO-2",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 8,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-lona-travada",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Lona travada",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-lona-danificada-rasgada",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Lona danificada / rasgada",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-falha-no-retrator-estrt",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Falha no retrator (ESTRT)",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-redutor-ou-motor-da-lona",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Redutor ou motor da lona",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 7,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 8,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-LONAS-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-LONAS",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 9,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-MECANISMO-falha-no-mecanismo-de-tracao",
+      "maquinaId": "A",
+      "subdivisaoId": "A-MECANISMO",
+      "nome": "Falha no mecanismo de tração",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-MECANISMO-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-MECANISMO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-MECANISMO-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-MECANISMO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-MECANISMO-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-MECANISMO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-MECANISMO-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-MECANISMO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-MECANISMO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-MECANISMO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-MECANISMO-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-MECANISMO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-rolo-travado",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Rolo travado",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-rolo-patinando",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Rolo patinando",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-acoplamento-do-rolo-solto",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Acoplamento do rolo solto",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-parou-sem-causa-aparente",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-ruido-ou-vibracao-anormal",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-vazamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-superaquecimento-temperatura-fora",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 6,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-falha-eletrica-ou-de-sensor",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 7,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "A-ROLOS-travamento-desalinhamento",
+      "maquinaId": "A",
+      "subdivisaoId": "A-ROLOS",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 8,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-ALIMENTADOR-parou-sem-causa-aparente",
+      "maquinaId": "B",
+      "subdivisaoId": "B-ALIMENTADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-ALIMENTADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "B",
+      "subdivisaoId": "B-ALIMENTADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-ALIMENTADOR-vazamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-ALIMENTADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-ALIMENTADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "B",
+      "subdivisaoId": "B-ALIMENTADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-ALIMENTADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "B",
+      "subdivisaoId": "B-ALIMENTADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-ALIMENTADOR-travamento-desalinhamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-ALIMENTADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-EXTRACAO-parou-sem-causa-aparente",
+      "maquinaId": "B",
+      "subdivisaoId": "B-EXTRACAO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-EXTRACAO-ruido-ou-vibracao-anormal",
+      "maquinaId": "B",
+      "subdivisaoId": "B-EXTRACAO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-EXTRACAO-vazamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-EXTRACAO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-EXTRACAO-superaquecimento-temperatura-fora",
+      "maquinaId": "B",
+      "subdivisaoId": "B-EXTRACAO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-EXTRACAO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "B",
+      "subdivisaoId": "B-EXTRACAO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-EXTRACAO-travamento-desalinhamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-EXTRACAO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-GUIAMENTO-parou-sem-causa-aparente",
+      "maquinaId": "B",
+      "subdivisaoId": "B-GUIAMENTO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-GUIAMENTO-ruido-ou-vibracao-anormal",
+      "maquinaId": "B",
+      "subdivisaoId": "B-GUIAMENTO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-GUIAMENTO-vazamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-GUIAMENTO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-GUIAMENTO-superaquecimento-temperatura-fora",
+      "maquinaId": "B",
+      "subdivisaoId": "B-GUIAMENTO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-GUIAMENTO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "B",
+      "subdivisaoId": "B-GUIAMENTO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-GUIAMENTO-travamento-desalinhamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-GUIAMENTO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-HIDRAULICA-parou-sem-causa-aparente",
+      "maquinaId": "B",
+      "subdivisaoId": "B-HIDRAULICA",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-HIDRAULICA-ruido-ou-vibracao-anormal",
+      "maquinaId": "B",
+      "subdivisaoId": "B-HIDRAULICA",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-HIDRAULICA-vazamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-HIDRAULICA",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-HIDRAULICA-superaquecimento-temperatura-fora",
+      "maquinaId": "B",
+      "subdivisaoId": "B-HIDRAULICA",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-HIDRAULICA-falha-eletrica-ou-de-sensor",
+      "maquinaId": "B",
+      "subdivisaoId": "B-HIDRAULICA",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-HIDRAULICA-travamento-desalinhamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-HIDRAULICA",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-MESA-TRANSFERENCIA-parou-sem-causa-aparente",
+      "maquinaId": "B",
+      "subdivisaoId": "B-MESA-TRANSFERENCIA",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-MESA-TRANSFERENCIA-ruido-ou-vibracao-anormal",
+      "maquinaId": "B",
+      "subdivisaoId": "B-MESA-TRANSFERENCIA",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-MESA-TRANSFERENCIA-vazamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-MESA-TRANSFERENCIA",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-MESA-TRANSFERENCIA-superaquecimento-temperatura-fora",
+      "maquinaId": "B",
+      "subdivisaoId": "B-MESA-TRANSFERENCIA",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-MESA-TRANSFERENCIA-falha-eletrica-ou-de-sensor",
+      "maquinaId": "B",
+      "subdivisaoId": "B-MESA-TRANSFERENCIA",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-MESA-TRANSFERENCIA-travamento-desalinhamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-MESA-TRANSFERENCIA",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-PRENSA-parou-sem-causa-aparente",
+      "maquinaId": "B",
+      "subdivisaoId": "B-PRENSA",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-PRENSA-ruido-ou-vibracao-anormal",
+      "maquinaId": "B",
+      "subdivisaoId": "B-PRENSA",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-PRENSA-vazamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-PRENSA",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-PRENSA-superaquecimento-temperatura-fora",
+      "maquinaId": "B",
+      "subdivisaoId": "B-PRENSA",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-PRENSA-falha-eletrica-ou-de-sensor",
+      "maquinaId": "B",
+      "subdivisaoId": "B-PRENSA",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-PRENSA-travamento-desalinhamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-PRENSA",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-SENSORAMENTO-parou-sem-causa-aparente",
+      "maquinaId": "B",
+      "subdivisaoId": "B-SENSORAMENTO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-SENSORAMENTO-ruido-ou-vibracao-anormal",
+      "maquinaId": "B",
+      "subdivisaoId": "B-SENSORAMENTO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-SENSORAMENTO-vazamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-SENSORAMENTO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-SENSORAMENTO-superaquecimento-temperatura-fora",
+      "maquinaId": "B",
+      "subdivisaoId": "B-SENSORAMENTO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-SENSORAMENTO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "B",
+      "subdivisaoId": "B-SENSORAMENTO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "B-SENSORAMENTO-travamento-desalinhamento",
+      "maquinaId": "B",
+      "subdivisaoId": "B-SENSORAMENTO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CENTRAL-LUBRIFICACAO-parou-sem-causa-aparente",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CENTRAL-LUBRIFICACAO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CENTRAL-LUBRIFICACAO-ruido-ou-vibracao-anormal",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CENTRAL-LUBRIFICACAO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CENTRAL-LUBRIFICACAO-vazamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CENTRAL-LUBRIFICACAO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CENTRAL-LUBRIFICACAO-superaquecimento-temperatura-fora",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CENTRAL-LUBRIFICACAO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CENTRAL-LUBRIFICACAO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CENTRAL-LUBRIFICACAO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CENTRAL-LUBRIFICACAO-travamento-desalinhamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CENTRAL-LUBRIFICACAO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CORTE-TRANSVERSAL-parou-sem-causa-aparente",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CORTE-TRANSVERSAL",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CORTE-TRANSVERSAL-ruido-ou-vibracao-anormal",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CORTE-TRANSVERSAL",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CORTE-TRANSVERSAL-vazamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CORTE-TRANSVERSAL",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CORTE-TRANSVERSAL-superaquecimento-temperatura-fora",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CORTE-TRANSVERSAL",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CORTE-TRANSVERSAL-falha-eletrica-ou-de-sensor",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CORTE-TRANSVERSAL",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-CORTE-TRANSVERSAL-travamento-desalinhamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-CORTE-TRANSVERSAL",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-EMPILHADOR-parou-sem-causa-aparente",
+      "maquinaId": "C",
+      "subdivisaoId": "C-EMPILHADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-EMPILHADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "C",
+      "subdivisaoId": "C-EMPILHADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-EMPILHADOR-vazamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-EMPILHADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-EMPILHADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "C",
+      "subdivisaoId": "C-EMPILHADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-EMPILHADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "C",
+      "subdivisaoId": "C-EMPILHADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-EMPILHADOR-travamento-desalinhamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-EMPILHADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-POSICIONADOR-parou-sem-causa-aparente",
+      "maquinaId": "C",
+      "subdivisaoId": "C-POSICIONADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-POSICIONADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "C",
+      "subdivisaoId": "C-POSICIONADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-POSICIONADOR-vazamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-POSICIONADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-POSICIONADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "C",
+      "subdivisaoId": "C-POSICIONADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-POSICIONADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "C",
+      "subdivisaoId": "C-POSICIONADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-POSICIONADOR-travamento-desalinhamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-POSICIONADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-REFRIGERACAO-parou-sem-causa-aparente",
+      "maquinaId": "C",
+      "subdivisaoId": "C-REFRIGERACAO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-REFRIGERACAO-ruido-ou-vibracao-anormal",
+      "maquinaId": "C",
+      "subdivisaoId": "C-REFRIGERACAO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-REFRIGERACAO-vazamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-REFRIGERACAO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-REFRIGERACAO-superaquecimento-temperatura-fora",
+      "maquinaId": "C",
+      "subdivisaoId": "C-REFRIGERACAO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-REFRIGERACAO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "C",
+      "subdivisaoId": "C-REFRIGERACAO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-REFRIGERACAO-travamento-desalinhamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-REFRIGERACAO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRACIONADOR-parou-sem-causa-aparente",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRACIONADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRACIONADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRACIONADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRACIONADOR-vazamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRACIONADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRACIONADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRACIONADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRACIONADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRACIONADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRACIONADOR-travamento-desalinhamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRACIONADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRANSMISSAO-parou-sem-causa-aparente",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRANSMISSAO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRANSMISSAO-ruido-ou-vibracao-anormal",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRANSMISSAO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRANSMISSAO-vazamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRANSMISSAO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRANSMISSAO-superaquecimento-temperatura-fora",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRANSMISSAO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRANSMISSAO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRANSMISSAO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "C-TRANSMISSAO-travamento-desalinhamento",
+      "maquinaId": "C",
+      "subdivisaoId": "C-TRANSMISSAO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-BASCULADOR-parou-sem-causa-aparente",
+      "maquinaId": "D",
+      "subdivisaoId": "D-BASCULADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-BASCULADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "D",
+      "subdivisaoId": "D-BASCULADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-BASCULADOR-vazamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-BASCULADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-BASCULADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "D",
+      "subdivisaoId": "D-BASCULADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-BASCULADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "D",
+      "subdivisaoId": "D-BASCULADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-BASCULADOR-travamento-desalinhamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-BASCULADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-DOSADOR-parou-sem-causa-aparente",
+      "maquinaId": "D",
+      "subdivisaoId": "D-DOSADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-DOSADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "D",
+      "subdivisaoId": "D-DOSADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-DOSADOR-vazamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-DOSADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-DOSADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "D",
+      "subdivisaoId": "D-DOSADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-DOSADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "D",
+      "subdivisaoId": "D-DOSADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-DOSADOR-travamento-desalinhamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-DOSADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ELEVADOR-parou-sem-causa-aparente",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ELEVADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ELEVADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ELEVADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ELEVADOR-vazamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ELEVADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ELEVADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ELEVADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ELEVADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ELEVADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ELEVADOR-travamento-desalinhamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ELEVADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-EXAUSTAO-parou-sem-causa-aparente",
+      "maquinaId": "D",
+      "subdivisaoId": "D-EXAUSTAO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-EXAUSTAO-ruido-ou-vibracao-anormal",
+      "maquinaId": "D",
+      "subdivisaoId": "D-EXAUSTAO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-EXAUSTAO-vazamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-EXAUSTAO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-EXAUSTAO-superaquecimento-temperatura-fora",
+      "maquinaId": "D",
+      "subdivisaoId": "D-EXAUSTAO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-EXAUSTAO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "D",
+      "subdivisaoId": "D-EXAUSTAO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-EXAUSTAO-travamento-desalinhamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-EXAUSTAO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-PAINEL-ELETRICO-parou-sem-causa-aparente",
+      "maquinaId": "D",
+      "subdivisaoId": "D-PAINEL-ELETRICO",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-PAINEL-ELETRICO-ruido-ou-vibracao-anormal",
+      "maquinaId": "D",
+      "subdivisaoId": "D-PAINEL-ELETRICO",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-PAINEL-ELETRICO-vazamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-PAINEL-ELETRICO",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-PAINEL-ELETRICO-superaquecimento-temperatura-fora",
+      "maquinaId": "D",
+      "subdivisaoId": "D-PAINEL-ELETRICO",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-PAINEL-ELETRICO-falha-eletrica-ou-de-sensor",
+      "maquinaId": "D",
+      "subdivisaoId": "D-PAINEL-ELETRICO",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-PAINEL-ELETRICO-travamento-desalinhamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-PAINEL-ELETRICO",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ROSCA-SEM-FIM-parou-sem-causa-aparente",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ROSCA-SEM-FIM",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ROSCA-SEM-FIM-ruido-ou-vibracao-anormal",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ROSCA-SEM-FIM",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ROSCA-SEM-FIM-vazamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ROSCA-SEM-FIM",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ROSCA-SEM-FIM-superaquecimento-temperatura-fora",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ROSCA-SEM-FIM",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ROSCA-SEM-FIM-falha-eletrica-ou-de-sensor",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ROSCA-SEM-FIM",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-ROSCA-SEM-FIM-travamento-desalinhamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-ROSCA-SEM-FIM",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-TRANSPORTADOR-parou-sem-causa-aparente",
+      "maquinaId": "D",
+      "subdivisaoId": "D-TRANSPORTADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-TRANSPORTADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "D",
+      "subdivisaoId": "D-TRANSPORTADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-TRANSPORTADOR-vazamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-TRANSPORTADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-TRANSPORTADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "D",
+      "subdivisaoId": "D-TRANSPORTADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-TRANSPORTADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "D",
+      "subdivisaoId": "D-TRANSPORTADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-TRANSPORTADOR-travamento-desalinhamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-TRANSPORTADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-VIBRADOR-parou-sem-causa-aparente",
+      "maquinaId": "D",
+      "subdivisaoId": "D-VIBRADOR",
+      "nome": "Parou sem causa aparente",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 0,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-VIBRADOR-ruido-ou-vibracao-anormal",
+      "maquinaId": "D",
+      "subdivisaoId": "D-VIBRADOR",
+      "nome": "Ruído ou vibração anormal",
+      "riscoPessoas": false,
+      "impactoQualidade": false,
+      "ordem": 1,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-VIBRADOR-vazamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-VIBRADOR",
+      "nome": "Vazamento",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 2,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-VIBRADOR-superaquecimento-temperatura-fora",
+      "maquinaId": "D",
+      "subdivisaoId": "D-VIBRADOR",
+      "nome": "Superaquecimento / temperatura fora",
+      "riscoPessoas": true,
+      "impactoQualidade": true,
+      "ordem": 3,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-VIBRADOR-falha-eletrica-ou-de-sensor",
+      "maquinaId": "D",
+      "subdivisaoId": "D-VIBRADOR",
+      "nome": "Falha elétrica ou de sensor",
+      "riscoPessoas": true,
+      "impactoQualidade": false,
+      "ordem": 4,
+      "ativo": true,
+      "origem": "seed"
+    },
+    {
+      "id": "D-VIBRADOR-travamento-desalinhamento",
+      "maquinaId": "D",
+      "subdivisaoId": "D-VIBRADOR",
+      "nome": "Travamento / desalinhamento",
+      "riscoPessoas": false,
+      "impactoQualidade": true,
+      "ordem": 5,
+      "ativo": true,
+      "origem": "seed"
+    }
+  ],
+  "config": {
+    "versao": 1,
+    "pesos": {
+      "c1": 0.42,
+      "c2": 0.26,
+      "c3": 0.16,
+      "c4": 0.1,
+      "c5": 0.06
+    },
+    "condicao": {
+      "parada": 1.0,
+      "restricao": 0.5
+    },
+    "aging": {
+      "ptsPorMin": 0.5,
+      "maxPts": 30
+    },
+    "limiares": {
+      "P1": 70,
+      "P2": 50,
+      "P3": 30
+    },
+    "metaInicioMin": {
+      "P0": 0,
+      "P1": 15,
+      "P2": 30,
+      "P3": 120,
+      "P4": null
+    },
+    "reincidenciaDias": 7
+  }
+}
