@@ -46,7 +46,8 @@ export function ProvedorUsuario({ children }: { children: ReactNode }) {
   } else if (authUser === null) {
     estado = { usuario: null, carregando: false };
   } else if (authUser.is_anonymous) {
-    const nome = (authUser.user_metadata?.nome as string | undefined) ?? "Operador";
+    // Conta anônima é do aparelho, compartilhado entre operadores: não carrega nome de ninguém.
+    const nome = "Operador";
     estado = { usuario: { uid: authUser.id, nome, papel: null }, carregando: false };
   } else if (perfil?.uid !== authUser.id) {
     estado = { usuario: null, carregando: true };

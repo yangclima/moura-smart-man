@@ -49,7 +49,7 @@ export function AbrirChamado({ params, searchParams }: Props) {
         <PassoNome
           inicial={op.nome}
           aoConfirmar={(n) => {
-            void op.confirmarNome(n);
+            op.confirmarNome(n);
             setEditandoNome(false);
           }}
         />

@@ -1,6 +1,7 @@
 /** Preferências do aparelho do operador (localStorage). Tudo tolerante a falhas. */
 
-const CHAVE_NOME = "acionamento.operador.nome";
+/** Versões antigas guardavam o nome do operador; o aparelho é compartilhado, então não guarda mais. */
+const CHAVE_NOME_LEGADA = "acionamento.operador.nome";
 const CHAVE_CHAMADOS = "acionamento.operador.chamados";
 const MAX_CHAMADOS = 10;
 
@@ -20,8 +21,13 @@ function gravar(chave: string, valor: string): void {
   }
 }
 
-export const lerNomeOperador = () => ler(CHAVE_NOME) ?? "";
-export const gravarNomeOperador = (nome: string) => gravar(CHAVE_NOME, nome.trim());
+export function apagarNomeLegado(): void {
+  try {
+    window.localStorage.removeItem(CHAVE_NOME_LEGADA);
+  } catch {
+    // armazenamento bloqueado: não havia nada salvo
+  }
+}
 
 export function lerMeusChamados(): string[] {
   try {

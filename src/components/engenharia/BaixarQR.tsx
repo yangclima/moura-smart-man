@@ -21,8 +21,10 @@ function ajustarFonte(ctx: CanvasRenderingContext2D, texto: string, peso: string
   } while (ctx.measureText(texto).width > largura && t > 12);
 }
 
-/** Monta o PNG: QR em cima e, embaixo, nome da máquina, TAG e instrução. */
-export function montarPng(qr: HTMLCanvasElement, maquina: Maquina): string {
+type SubdivisaoEtiqueta = { id: string; nome: string };
+
+/** Monta o PNG: QR em cima e, embaixo, nome da máquina, TAG (e subdivisão) e instrução. */
+export function montarPng(qr: HTMLCanvasElement, maquina: Maquina, subdivisao?: SubdivisaoEtiqueta): string {
   const largura = LADO_QR + 2 * MARGEM;
   const canvas = document.createElement("canvas");
   canvas.width = largura;
@@ -41,21 +43,28 @@ export function montarPng(qr: HTMLCanvasElement, maquina: Maquina): string {
   ctx.textBaseline = "top";
   ajustarFonte(ctx, maquina.nome, "bold", 72, util);
   ctx.fillText(maquina.nome, largura / 2, base + 20);
-  ajustarFonte(ctx, maquina.tag, "normal", 30, util);
-  ctx.fillText(maquina.tag, largura / 2, base + 110);
+  const linha2 = subdivisao ? `${subdivisao.nome} · ${maquina.tag}` : maquina.tag;
+  ajustarFonte(ctx, linha2, "normal", 30, util);
+  ctx.fillText(linha2, largura / 2, base + 110);
   ajustarFonte(ctx, INSTRUCAO, "bold", 32, util);
   ctx.fillText(INSTRUCAO, largura / 2, base + 160);
   return canvas.toDataURL("image/png");
 }
 
-export function BaixarQR({ maquina, rotulo = "Baixar QR (PNG)" }: { maquina: Maquina; rotulo?: string }) {
+interface BaixarQRProps {
+  maquina: Maquina;
+  subdivisao?: SubdivisaoEtiqueta;
+  rotulo?: string;
+}
+
+export function BaixarQR({ maquina, subdivisao, rotulo = "Baixar QR (PNG)" }: BaixarQRProps) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   function baixar() {
     if (!ref.current) return;
     const a = document.createElement("a");
-    a.href = montarPng(ref.current, maquina);
-    a.download = `qr-${maquina.id}.png`;
+    a.href = montarPng(ref.current, maquina, subdivisao);
+    a.download = `qr-${maquina.id}${subdivisao ? `-${subdivisao.id}` : ""}.png`;
     a.click();
   }
 
@@ -63,7 +72,8 @@ export function BaixarQR({ maquina, rotulo = "Baixar QR (PNG)" }: { maquina: Maq
     <>
       <QRCodeCanvas
         ref={ref}
-        value={urlDaMaquina(maquina.id)} size={LADO_QR}
+        value={urlDaMaquina(maquina.id, subdivisao?.id)}
+        size={LADO_QR}
         level={NIVEL_QR}
         marginSize={0}
         imageSettings={logoNoQr(LADO_QR)}

@@ -201,6 +201,8 @@
 
 @media print {
   .nao-imprimir { display: none !important; }
+  /* Um diálogo ainda fechando não sai no papel. */
+  [data-slot="dialog-overlay"], [data-slot="dialog-content"], [data-sonner-toaster] { display: none !important; }
   .etiqueta { break-inside: avoid; border: 1px dashed #999; }
   @page { size: A4; margin: 10mm; }
   body { background: white; }
