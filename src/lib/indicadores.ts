@@ -194,6 +194,43 @@ export function serieDiaria(chamados: Chamado[], desde: Instante, ate: Instante)
   });
 }
 
+export interface PontoHorasParadas {
+  /** "AAAA-MM-DD" em Recife. */
+  dia: string;
+  rotulo: string;
+  /** Horas paradas por máquina (nome da máquina). */
+  horas: Record<string, number>;
+  /** Chamados com parada por máquina. */
+  n: Record<string, number>;
+}
+
+export interface SerieHorasParadas {
+  maquinas: string[];
+  pontos: PontoHorasParadas[];
+}
+
+/** Horas paradas (T5−T0 dos chamados com máquina parada) por dia de abertura e máquina, com todos os dias. */
+export function serieHorasParadas(chamados: Chamado[], desde: Instante, ate: Instante): SerieHorasParadas {
+  const parados = chamados.flatMap((c) => {
+    const min = c.condicao === "parada" ? temposChamado(c).indisponibilidadeMin : null;
+    return min === null ? [] : [{ dia: chaveDia(c.marcos.abertura), maquina: c.maquinaNome, horas: min / 60 }];
+  });
+  const maquinas = [...new Set(parados.map((p) => p.maquina))].sort();
+  const pontos = diasEntre(desde, ate).map((t) => {
+    const dia = chaveDia(t);
+    const doDia = parados.filter((p) => p.dia === dia);
+    const porMaquina = (f: (l: typeof doDia) => number) =>
+      Object.fromEntries(maquinas.map((m) => [m, f(doDia.filter((p) => p.maquina === m))]));
+    return {
+      dia,
+      rotulo: rotuloDia(t),
+      horas: porMaquina((l) => l.reduce((s, p) => s + p.horas, 0)),
+      n: porMaquina((l) => l.length),
+    };
+  });
+  return { maquinas, pontos };
+}
+
 const iso = (t?: Instante) => (t === undefined ? "" : new Date(t).toISOString());
 
 /** CSV (separador ;) com todos os marcos — insumo da conciliação com MES/SAP. */

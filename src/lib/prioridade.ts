@@ -117,7 +117,7 @@ export function ordenarFila<T extends ChamadoPriorizavel>(
 
 /**
  * Compara a espera até o início do atendimento com a meta da classe.
- * Meta 0 (P0) significa "imediato": qualquer espera acima de 1 min estoura.
+ * Meta 0 significa "imediato": qualquer espera acima de 1 min estoura.
  */
 export function estourouMeta(
   chamado: ChamadoPriorizavel,

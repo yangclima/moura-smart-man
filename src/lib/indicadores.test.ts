@@ -6,6 +6,7 @@ import {
   porMaquina,
   resumir,
   serieDiaria,
+  serieHorasParadas,
   trechosChamado,
   TRECHOS,
 } from "./indicadores";
@@ -134,5 +135,24 @@ describe("serieDiaria", () => {
     });
     const serie = serieDiaria([tarde], Date.UTC(2026, 9, 14, 3), Date.UTC(2026, 9, 15, 20));
     expect(serie.find((p) => p.dia === "2026-10-14")?.encerrados).toBe(1);
+  });
+});
+
+describe("serieHorasParadas", () => {
+  it("soma T5−T0 só dos chamados com máquina parada, por dia e máquina", () => {
+    const s = serieHorasParadas(
+      [
+        chamado({ inicioMin: 5, scoreBase: 75 }),
+        chamado({ inicioMin: 5, scoreBase: 75, maquinaNome: "Máquina B" }),
+        chamado({ inicioMin: 5, scoreBase: 75, condicao: "restricao" }),
+      ],
+      Date.UTC(2026, 9, 13, 3),
+      Date.UTC(2026, 9, 14, 20),
+    );
+    expect(s.maquinas).toEqual(["Máquina A", "Máquina B"]);
+    expect(s.pontos.map((p) => [p.rotulo, p.horas["Máquina A"], p.n["Máquina A"]])).toEqual([
+      ["13/10", 0, 0],
+      ["14/10", 70 / 60, 1],
+    ]);
   });
 });

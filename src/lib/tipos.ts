@@ -175,6 +175,6 @@ export const CONFIG_PADRAO: ConfigPriorizacao = {
   condicao: { parada: 1.0, restricao: 0.5 },
   aging: { ptsPorMin: 0.5, maxPts: 30 },
   limiares: { P1: 70, P2: 50, P3: 30 },
-  metaInicioMin: { P0: 0, P1: 15, P2: 30, P3: 120, P4: null },
+  metaInicioMin: { P0: 10, P1: 15, P2: 30, P3: 120, P4: null },
   reincidenciaDias: 7,
 };

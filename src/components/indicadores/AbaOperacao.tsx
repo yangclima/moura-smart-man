@@ -11,7 +11,9 @@ import { formatarMinutos, type TemposChamado } from "@/lib/tempo";
 import type { Chamado, ConfigPriorizacao } from "@/lib/tipos";
 import { CartaoTempo } from "./CartaoTempo";
 import { GraficoDecomposicao } from "./graficos/GraficoDecomposicao";
+import { EditorMetas } from "./EditorMetas";
 import { GraficoEvolucao } from "./graficos/GraficoEvolucao";
+import { GraficoHorasParadas } from "./graficos/GraficoHorasParadas";
 
 export const PERIODOS = { hoje: "Hoje", "7": "7 dias", "30": "30 dias" } as const;
 export type Periodo = keyof typeof PERIODOS;
@@ -40,6 +42,7 @@ interface AbaOperacaoProps {
 export function AbaOperacao({ periodo, desde, onPeriodo, encerrados, tempos, config, carregando, erro }: AbaOperacaoProps) {
   const metas = metaPorClasse(encerrados, config);
   const dias = periodo === "hoje" ? 1 : Number(periodo);
+  const ate = desde + dias * MS_POR_DIA - 1;
   const maquinas = porMaquina(encerrados);
 
   function exportar() {
@@ -82,16 +85,16 @@ export function AbaOperacao({ periodo, desde, onPeriodo, encerrados, tempos, con
           <GraficoDecomposicao encerrados={encerrados} config={config} />
 
           {periodo !== "hoje" && (
-            <GraficoEvolucao
-              encerrados={encerrados}
-              desde={desde}
-              ate={desde + dias * MS_POR_DIA - 1}
-              metaP2={config.metaInicioMin.P2}
-            />
+            <GraficoEvolucao encerrados={encerrados} desde={desde} ate={ate} metaP2={config.metaInicioMin.P2} />
           )}
 
+          <GraficoHorasParadas />
+
           <section className="grid gap-2 rounded-2xl border bg-card p-4 shadow-xs">
-            <h2 className="text-lg font-semibold">Meta de início cumprida, por classe</h2>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-lg font-semibold">Meta de início cumprida, por classe</h2>
+              <EditorMetas config={config} />
+            </div>
             <Table>
               <TableHeader>
                 <TableRow>

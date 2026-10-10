@@ -8,8 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTempoReal } from "@/hooks/useTempoReal";
 import { useConfig } from "@/hooks/useConfig";
 import { resumoTempos } from "@/lib/indicadores";
-import { chamadoDeLinha } from "@/lib/mapear";
-import { supabase } from "@/lib/supabase";
+import { carregarEncerrados } from "@/lib/chamados";
 import type { Chamado } from "@/lib/tipos";
 
 function inicioDoPeriodo(p: Periodo): number {
@@ -24,17 +23,6 @@ function inicioDoPeriodo(p: Periodo): number {
 }
 
 const VAZIO: Chamado[] = [];
-
-async function carregarEncerrados(desde: number): Promise<Chamado[]> {
-  const { data, error } = await supabase
-    .from("chamados")
-    .select("*")
-    .eq("status", "encerrado")
-    .gte("abertura", new Date(desde).toISOString())
-    .order("abertura");
-  if (error) throw new Error(error.message);
-  return data.map(chamadoDeLinha);
-}
 
 type Aba = "operacao" | "historico";
 

@@ -16,6 +16,19 @@ import {
 
 const MS_POR_DIA = 86_400_000;
 
+/** Chamados encerrados abertos desde `desde` (T0); `soParadas` restringe aos com máquina parada. */
+export async function carregarEncerrados(desde: number, soParadas = false): Promise<Chamado[]> {
+  let consulta = supabase
+    .from("chamados")
+    .select("*")
+    .eq("status", "encerrado")
+    .gte("abertura", new Date(desde).toISOString());
+  if (soParadas) consulta = consulta.eq("condicao", "parada");
+  const { data, error } = await consulta.order("abertura");
+  if (error) throw new Error(error.message);
+  return data.map(chamadoDeLinha);
+}
+
 /** Chamados da subdivisão abertos nos últimos N dias, exceto cancelados (critério C5). */
 export async function contarReincidencia(subdivisaoId: string, dias: number): Promise<number> {
   const desde = new Date(Date.now() - dias * MS_POR_DIA).toISOString();

@@ -145,10 +145,17 @@ describe("estourouMeta", () => {
     expect(estourouMeta(chamado(p1, { esperaMin: 60, inicioMin: 5 }), AGORA, CFG)).toBe("ok");
   });
 
-  it("P4 não tem meta e P0 estoura após 1 minuto", () => {
+  it("P4 não tem meta e P0 estoura após 10 minutos", () => {
     expect(estourouMeta(chamado(ZERO, { esperaMin: 0 }), AGORA, CFG)).toBe("ok");
-    expect(estourouMeta(chamado(ZERO, { risco: true }), AGORA, CFG)).toBe("atencao");
-    expect(estourouMeta(chamado(ZERO, { risco: true, esperaMin: 2 }), AGORA, CFG)).toBe("estourado");
+    expect(estourouMeta(chamado(ZERO, { risco: true, esperaMin: 5 }), AGORA, CFG)).toBe("ok");
+    expect(estourouMeta(chamado(ZERO, { risco: true, esperaMin: 9 }), AGORA, CFG)).toBe("atencao");
+    expect(estourouMeta(chamado(ZERO, { risco: true, esperaMin: 11 }), AGORA, CFG)).toBe("estourado");
+  });
+
+  it("meta 0 significa imediato: estoura após 1 minuto", () => {
+    const imediato = { ...CFG, metaInicioMin: { ...CFG.metaInicioMin, P0: 0 } };
+    expect(estourouMeta(chamado(ZERO, { risco: true }), AGORA, imediato)).toBe("atencao");
+    expect(estourouMeta(chamado(ZERO, { risco: true, esperaMin: 2 }), AGORA, imediato)).toBe("estourado");
   });
 });
 
