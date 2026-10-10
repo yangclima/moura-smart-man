@@ -15,7 +15,7 @@ export function TopoOperador() {
           href="/chamado"
           className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-moura-azul transition-colors hover:bg-accent focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
         >
-          <ClipboardListIcon className="size-4" /> Meus chamados
+          <ClipboardListIcon className="size-4" /> Chamados
         </Link>
       </div>
     </header>

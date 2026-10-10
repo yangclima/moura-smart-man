@@ -100,7 +100,7 @@ describe.skipIf(!RODAR)("fluxo do chamado no Supabase local", () => {
     expect(data ?? []).toHaveLength(0);
   });
 
-  it("operador abre, mantenedor atende e o solicitante libera", { timeout: 60_000 }, async () => {
+  it("operador abre, mantenedor atende e qualquer operador libera", { timeout: 60_000 }, async () => {
     const op = await anonimo();
     const id = await abrir(op.c);
     const { data: linha } = await op.c.from("chamados").select("*").eq("id", id).single();
@@ -137,12 +137,12 @@ describe.skipIf(!RODAR)("fluxo do chamado no Supabase local", () => {
       (await acao(dono.c, id, "concluir", { conclusao: { componente: "RMPF", modoFalha: "Desgaste", acao: "Substituído", pecas: "", obs: "" } })).error,
     ).toBeNull();
 
-    // Outro aparelho anônimo não libera; o solicitante sim.
-    const intruso = await anonimo();
-    expect((await acao(intruso.c, id, "liberar")).error?.message).toBe("Seu perfil não pode executar esta ação");
-    expect((await acao(op.c, id, "reabrir")).error).toBeNull();
+    // A produção é livre: outro aparelho anônimo reabre ou libera; o mantenedor não.
+    const outroAparelho = await anonimo();
+    expect((await acao(dono.c, id, "liberar")).error?.message).toBe("Seu perfil não pode executar esta ação");
+    expect((await acao(outroAparelho.c, id, "reabrir")).error).toBeNull();
     await acao(dono.c, id, "concluir", { conclusao: { componente: "RMPF", modoFalha: "Desgaste", acao: "Substituído", pecas: "", obs: "" } });
-    expect((await acao(op.c, id, "liberar")).error).toBeNull();
+    expect((await acao(outroAparelho.c, id, "liberar")).error).toBeNull();
 
     const { mapear } = { mapear: await import("./mapear") };
     const final = mapear.chamadoDeLinha((await op.c.from("chamados").select("*").eq("id", id).single()).data!);

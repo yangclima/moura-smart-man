@@ -19,8 +19,11 @@ interface Transicao {
   para?: Status;
   marco?: keyof Marcos;
   papeis: Papel[];
-  /** O solicitante do chamado também pode executar, qualquer que seja o papel. */
-  solicitante?: boolean;
+  /**
+   * Qualquer pessoa da produção pode executar: operador anônimo (sem perfil) ou com papel "operador",
+   * em qualquer aparelho, mesmo sem ter aberto o chamado.
+   */
+  producao?: boolean;
 }
 
 const EQUIPE: Papel[] = ["mantenedor", "lider"];
@@ -41,14 +44,14 @@ export const TRANSICOES: Record<Acao, Transicao> = {
     de: ["aguardando_liberacao"],
     para: "encerrado",
     marco: "liberado",
-    papeis: ["lider"],
-    solicitante: true,
+    papeis: ["lider", "operador"],
+    producao: true,
   },
   reabrir: {
     de: ["aguardando_liberacao"],
     para: "em_atendimento",
-    papeis: ["lider"],
-    solicitante: true,
+    papeis: ["lider", "operador"],
+    producao: true,
   },
   cancelar: { de: ["aberto", "recebido"], para: "cancelado", papeis: ["lider"] },
   atribuir: { de: ["aberto", "recebido"], para: "recebido", marco: "recebido", papeis: ["lider"] },
@@ -71,7 +74,7 @@ export interface DadosAcao {
 
 export class AcaoRecusada extends Error {}
 
-type ChamadoValidavel = Pick<Chamado, "status" | "responsavel" | "solicitante">;
+type ChamadoValidavel = Pick<Chamado, "status" | "responsavel">;
 
 function mensagemStatus(acao: Acao, chamado: ChamadoValidavel): string {
   const quem = chamado.responsavel?.nome;
@@ -90,8 +93,8 @@ export function validarAcao(
   if (!t.de.includes(chamado.status)) throw new AcaoRecusada(mensagemStatus(acao, chamado));
 
   const temPapel = usuario.papel !== null && t.papeis.includes(usuario.papel);
-  const ehSolicitante = Boolean(t.solicitante) && chamado.solicitante.uid === usuario.uid;
-  if (!temPapel && !ehSolicitante) throw new AcaoRecusada("Seu perfil não pode executar esta ação");
+  const operadorAnonimo = Boolean(t.producao) && usuario.papel === null;
+  if (!temPapel && !operadorAnonimo) throw new AcaoRecusada("Seu perfil não pode executar esta ação");
 
   const ehResponsavel = chamado.responsavel?.uid === usuario.uid;
   const exigeResponsavel = ["iniciar", "devolver", "pausar", "retomar", "concluir"].includes(acao);

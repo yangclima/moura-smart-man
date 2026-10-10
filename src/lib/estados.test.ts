@@ -45,12 +45,18 @@ describe("validarAcao", () => {
     expect(validarAcao(ch("recebido", joao), "iniciar", lider).para).toBe("em_atendimento");
   });
 
-  it("operador só libera ou reabre o próprio chamado", () => {
-    const outro: Usuario = { uid: "zeca", nome: "Zeca", papel: null };
-    expect(() => validarAcao(ch("aguardando_liberacao", joao), "liberar", outro)).toThrow(
+  it("qualquer operador libera ou reabre, mesmo sem ter aberto o chamado", () => {
+    const outroAparelho: Usuario = { uid: "zeca", nome: "Zeca", papel: null };
+    const comPerfil: Usuario = { uid: "rita", nome: "Rita", papel: "operador" };
+    expect(validarAcao(ch("aguardando_liberacao", joao), "liberar", outroAparelho).para).toBe("encerrado");
+    expect(validarAcao(ch("aguardando_liberacao", joao), "reabrir", comPerfil).para).toBe("em_atendimento");
+    expect(() => validarAcao(ch("aberto"), "receber", operador)).toThrow(AcaoRecusada);
+  });
+
+  it("mantenedor não confirma a liberação do próprio trabalho", () => {
+    expect(() => validarAcao(ch("aguardando_liberacao", joao), "liberar", joao)).toThrow(
       "Seu perfil não pode executar esta ação",
     );
-    expect(() => validarAcao(ch("aberto"), "receber", operador)).toThrow(AcaoRecusada);
   });
 
   it("exige motivo, justificativa e campos de conclusão", () => {

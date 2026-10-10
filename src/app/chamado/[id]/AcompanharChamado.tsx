@@ -10,7 +10,7 @@ import { SeloCondicao } from "@/components/chamado/CartaoChamado";
 import { Cronometro } from "@/components/chamado/Cronometro";
 import { FotoChamado } from "@/components/chamado/FotoChamado";
 import { LinhaDoTempo } from "@/components/chamado/LinhaDoTempo";
-import { MeusChamados } from "@/components/chamado/MeusChamados";
+import { ChamadosEmAberto } from "@/components/chamado/ChamadosEmAberto";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -97,7 +97,10 @@ export function AcompanharChamado({ params }: { params: Promise<{ id: string }> 
           <PlusIcon /> Abrir outro chamado nesta máquina
         </Link>
       </Button>
-      <MeusChamados atual={chamado.id} />
+      <section className="grid gap-2">
+        <h2 className="text-lg font-semibold">Outros chamados em aberto</h2>
+        <ChamadosEmAberto chamados={fila.chamados.filter((c) => c.id !== chamado.id)} />
+      </section>
     </main>
   );
 }
