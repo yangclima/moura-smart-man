@@ -1,3 +1,4 @@
+import { celula, textoLivre } from "./csv";
 import { prioridadeAtual } from "./prioridade";
 import { mediana, percentil, temposChamado, type TemposChamado } from "./tempo";
 import type { Chamado, Classe, ConfigPriorizacao, Instante } from "./tipos";
@@ -74,11 +75,6 @@ export function porMaquina(chamados: Chamado[]): LinhaMaquina[] {
 
 const iso = (t?: Instante) => (t === undefined ? "" : new Date(t).toISOString());
 
-function celula(v: unknown): string {
-  const s = String(v ?? "");
-  return /[";\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-}
-
 /** CSV (separador ;) com todos os marcos — insumo da conciliação com MES/SAP. */
 export function gerarCsv(chamados: Chamado[]): string {
   const cab = [
@@ -92,13 +88,13 @@ export function gerarCsv(chamados: Chamado[]): string {
     const t = temposChamado(c);
     const r = (n: number | null) => (n === null ? "" : n.toFixed(1));
     return [
-      c.numero, c.maquinaNome, c.tag, c.subdivisaoNome, c.erroNome, c.erroIdRevisado ?? "", c.descricaoLivre,
+      c.numero, c.maquinaNome, c.tag, c.subdivisaoNome, c.erroNome, c.erroIdRevisado ?? "", textoLivre(c.descricaoLivre),
       c.condicao, c.riscoPessoas, c.impactoQualidade, c.prioridade.classeBase, c.prioridade.scoreBase,
       c.override?.classe ?? "", c.solicitante.nome, c.responsavel?.nome ?? "", c.status,
       iso(c.marcos.abertura), iso(c.marcos.recebido), iso(c.marcos.inicio), iso(c.marcos.fimAtuacao), iso(c.marcos.liberado),
       c.pausas.map((p) => `${iso(p.inicio)}/${iso(p.fim)} ${p.motivo}`).join(" | "),
       r(t.reacaoMin), r(t.esperaMin), r(t.reparoMin), r(t.indisponibilidadeMin),
-      c.conclusao?.componente ?? "", c.conclusao?.modoFalha ?? "", c.conclusao?.acao ?? "", c.conclusao?.pecas ?? "", c.conclusao?.obs ?? "",
+      c.conclusao?.componente ?? "", c.conclusao?.modoFalha ?? "", c.conclusao?.acao ?? "", c.conclusao?.pecas ?? "", textoLivre(c.conclusao?.obs),
     ].map(celula).join(";");
   });
   return [cab.join(";"), ...linhas].join("\n");

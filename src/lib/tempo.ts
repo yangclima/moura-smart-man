@@ -53,6 +53,8 @@ export function formatarCronometro(ms: number): string {
 
 export function formatarMinutos(min: number | null): string {
   if (min === null || Number.isNaN(min)) return "—";
+  // Negativo só aparece no histórico: o SAP apontado antes do início da parada.
+  if (min <= -1) return `−${formatarMinutos(-min)}`;
   if (min < 1) return "< 1 min";
   if (min < 60) return `${Math.round(min)} min`;
   const h = Math.floor(min / 60);

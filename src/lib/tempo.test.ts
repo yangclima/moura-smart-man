@@ -45,6 +45,8 @@ describe("formatação", () => {
     expect(formatarMinutos(0.4)).toBe("< 1 min");
     expect(formatarMinutos(42)).toBe("42 min");
     expect(formatarMinutos(125)).toBe("2 h 5 min");
+    expect(formatarMinutos(-11)).toBe("−11 min");
+    expect(formatarMinutos(-0.4)).toBe("< 1 min");
   });
 });
 
