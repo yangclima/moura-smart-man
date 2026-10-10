@@ -4,6 +4,7 @@
  * T4 = fim no SAP, T5 = retomada (MES). Não há T1 nem T3 no histórico.
  */
 import { celula, textoLivre } from "./csv";
+import { dataRecife, meiaNoiteRecife, MS_POR_DIA, rotuloDia, rotuloMesCurto } from "./fuso";
 import {
   CLASSES_CONCILIACAO,
   CONFIANCAS,
@@ -13,6 +14,7 @@ import {
   type EventoHistorico,
 } from "./historico";
 import { resumir, type ResumoTempo } from "./indicadores";
+import { percentil } from "./tempo";
 import type { Instante } from "./tipos";
 
 const MIN_POR_H = 60;
@@ -101,6 +103,9 @@ export interface FiltroLista {
   revisar?: boolean;
   motivo?: string;
   divergencia?: TipoDivergencia;
+  /** Início da parada (T0) em [inicio, fim): vem do clique num ponto do gráfico mensal. */
+  periodo?: { inicio: Instante; fim: Instante; rotulo: string };
+  quebra?: boolean;
 }
 
 // ---------------------------------------------------------------- regras
@@ -179,7 +184,10 @@ export function filtrarLista(eventos: EventoHistorico[], f: FiltroLista): Evento
       (f.confianca === undefined || e.confianca === f.confianca) &&
       (f.revisar === undefined || precisaRevisao(e) === f.revisar) &&
       (f.motivo === undefined || e.motivoSemPar === f.motivo) &&
-      (f.divergencia === undefined || (conciliado(e) && PREDICADOS_DIVERGENCIA[f.divergencia](e))),
+      (f.divergencia === undefined || (conciliado(e) && PREDICADOS_DIVERGENCIA[f.divergencia](e))) &&
+      (f.periodo === undefined ||
+        (e.mesInicio !== undefined && e.mesInicio >= f.periodo.inicio && e.mesInicio < f.periodo.fim)) &&
+      (f.quebra === undefined || e.contemQuebra === f.quebra),
   );
 }
 
@@ -266,6 +274,119 @@ export function divergencias(eventos: EventoHistorico[]): TabelaCruzada<TipoDive
     eventos.filter(conciliado),
     TIPOS_DIVERGENCIA.map((t) => ({ chave: t, rotulo: ROTULOS_DIVERGENCIA[t], casa: PREDICADOS_DIVERGENCIA[t] })),
   );
+}
+
+// ---------------------------------------------------------------- gráficos
+
+/** O gráfico de espera recorta o eixo em ±2 h; os valores de fora viram aviso. */
+export const LIMITE_EIXO_ESPERA_MIN = 120;
+
+export interface DistribuicaoEspera {
+  maquina: string;
+  p10: number | null;
+  p25: number | null;
+  mediana: number | null;
+  p75: number | null;
+  p90: number | null;
+  n: number;
+  /** Eventos fora do eixo recortado. */
+  abaixo: number;
+  acima: number;
+}
+
+/** Espera até a atuação (T2−T0) por máquina, só nos pares confiáveis (mesma regra dos cartões). */
+export function distribuicaoEspera(eventos: EventoHistorico[]): DistribuicaoEspera[] {
+  return agruparPorMaquina(eventos).map(([maquina, lista]) => {
+    const v = lista.filter(entraNasMetricas).flatMap((e) => (e.esperaAteAtuacaoMin === null ? [] : [e.esperaAteAtuacaoMin]));
+    return {
+      maquina,
+      p10: percentil(v, 0.1),
+      p25: percentil(v, 0.25),
+      mediana: percentil(v, 0.5),
+      p75: percentil(v, 0.75),
+      p90: percentil(v, 0.9),
+      n: v.length,
+      abaixo: v.filter((x) => x < -LIMITE_EIXO_ESPERA_MIN).length,
+      acima: v.filter((x) => x > LIMITE_EIXO_ESPERA_MIN).length,
+    };
+  });
+}
+
+export type MetricaSerie = "horas" | "quebras";
+export type Granularidade = "mes" | "semana";
+
+/** Abaixo de ~4 meses de dados, a série mensal teria poucos pontos: agrupa por semana. */
+export const DIAS_MINIMOS_MENSAL = 120;
+/** Período com menos de 90% de cobertura pelos dados é marcado como incompleto. */
+const COBERTURA_MINIMA = 0.9;
+
+export interface PeriodoSerie {
+  chave: string;
+  rotulo: string;
+  inicio: Instante;
+  fim: Instante;
+  /** Primeiro ou último período sem cobertura completa: não é queda, é falta de dado. */
+  incompleto: boolean;
+  /** Por máquina: horas paradas ou número de quebras. */
+  valores: Record<string, number>;
+  /** Por máquina: eventos que entraram no valor. */
+  n: Record<string, number>;
+}
+
+export interface SerieMensal {
+  granularidade: Granularidade;
+  maquinas: string[];
+  periodos: PeriodoSerie[];
+}
+
+function inicioDoPeriodo(t: Instante, g: Granularidade): Instante {
+  const d = dataRecife(t);
+  if (g === "mes") return meiaNoiteRecife(d.ano, d.mes, 1);
+  // Semana começando na segunda-feira.
+  return meiaNoiteRecife(d.ano, d.mes, d.dia - ((d.diaSemana + 6) % 7));
+}
+
+function proximoPeriodo(inicio: Instante, g: Granularidade): Instante {
+  if (g === "semana") return inicio + 7 * MS_POR_DIA;
+  const d = dataRecife(inicio);
+  return meiaNoiteRecife(d.ano, d.mes + 1, 1);
+}
+
+/**
+ * Horas paradas ou quebras por máquina ao longo do tempo, pelo início da parada (T0, fuso America/Recife).
+ * Entram só eventos com parada no MES (MES + SAP e MES sem SAP).
+ */
+export function serieMensal(eventos: EventoHistorico[], metrica: MetricaSerie): SerieMensal {
+  const comParada = eventos.filter((e): e is EventoHistorico & { mesInicio: Instante } => temParada(e) && e.mesInicio !== undefined);
+  const maquinas = maquinasDoHistorico(comParada);
+  if (comParada.length === 0) return { granularidade: "mes", maquinas, periodos: [] };
+
+  const instantes = comParada.map((e) => e.mesInicio);
+  const primeiro = Math.min(...instantes);
+  const ultimo = Math.max(...instantes);
+  const granularidade: Granularidade = ultimo - primeiro < DIAS_MINIMOS_MENSAL * MS_POR_DIA ? "semana" : "mes";
+  const conta = (e: EventoHistorico) => (metrica === "horas" ? (e.indisponibilidadeH ?? 0) : e.contemQuebra ? 1 : 0);
+  const entra = (e: EventoHistorico) => (metrica === "horas" ? true : e.contemQuebra);
+
+  const periodos: PeriodoSerie[] = [];
+  for (let inicio = inicioDoPeriodo(primeiro, granularidade); inicio <= ultimo; ) {
+    const fim = proximoPeriodo(inicio, granularidade);
+    const doPeriodo = comParada.filter((e) => e.mesInicio >= inicio && e.mesInicio < fim);
+    const coberto = Math.min(fim, ultimo + MS_POR_DIA) - Math.max(inicio, primeiro);
+    const porMaquina = (f: (lista: EventoHistorico[]) => number) =>
+      Object.fromEntries(maquinas.map((m) => [m, f(doPeriodo.filter((e) => e.maquina === m))]));
+    periodos.push({
+      chave: String(inicio),
+      rotulo: granularidade === "mes" ? rotuloMesCurto(inicio) : rotuloDia(inicio),
+      inicio,
+      fim,
+      incompleto: coberto / (fim - inicio) < COBERTURA_MINIMA,
+      valores: porMaquina((l) => soma(l.map(conta))),
+      n: porMaquina((l) => l.filter(entra).length),
+    });
+    inicio = fim;
+  }
+  return { granularidade, maquinas, periodos };
 }
 
 // ---------------------------------------------------------------- CSV

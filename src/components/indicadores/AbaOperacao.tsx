@@ -10,9 +10,13 @@ import { gerarCsv, metaPorClasse, porMaquina, type ResumoTempo } from "@/lib/ind
 import { formatarMinutos, type TemposChamado } from "@/lib/tempo";
 import type { Chamado, ConfigPriorizacao } from "@/lib/tipos";
 import { CartaoTempo } from "./CartaoTempo";
+import { GraficoDecomposicao } from "./graficos/GraficoDecomposicao";
+import { GraficoEvolucao } from "./graficos/GraficoEvolucao";
 
 export const PERIODOS = { hoje: "Hoje", "7": "7 dias", "30": "30 dias" } as const;
 export type Periodo = keyof typeof PERIODOS;
+
+const MS_POR_DIA = 86_400_000;
 
 const ROTULOS = {
   reacaoMin: "Reação (T1−T0)",
@@ -23,6 +27,8 @@ const ROTULOS = {
 
 interface AbaOperacaoProps {
   periodo: Periodo;
+  /** Meia-noite do primeiro dia do período. */
+  desde: number;
   onPeriodo: (p: Periodo) => void;
   encerrados: Chamado[];
   tempos: Record<keyof TemposChamado, ResumoTempo>;
@@ -31,8 +37,9 @@ interface AbaOperacaoProps {
   erro: string | null;
 }
 
-export function AbaOperacao({ periodo, onPeriodo, encerrados, tempos, config, carregando, erro }: AbaOperacaoProps) {
+export function AbaOperacao({ periodo, desde, onPeriodo, encerrados, tempos, config, carregando, erro }: AbaOperacaoProps) {
   const metas = metaPorClasse(encerrados, config);
+  const dias = periodo === "hoje" ? 1 : Number(periodo);
   const maquinas = porMaquina(encerrados);
 
   function exportar() {
@@ -71,6 +78,17 @@ export function AbaOperacao({ periodo, onPeriodo, encerrados, tempos, config, ca
               <CartaoTempo key={k} rotulo={ROTULOS[k]} mediana={tempos[k].mediana} p90={tempos[k].p90} />
             ))}
           </div>
+
+          <GraficoDecomposicao encerrados={encerrados} config={config} />
+
+          {periodo !== "hoje" && (
+            <GraficoEvolucao
+              encerrados={encerrados}
+              desde={desde}
+              ate={desde + dias * MS_POR_DIA - 1}
+              metaP2={config.metaInicioMin.P2}
+            />
+          )}
 
           <section className="grid gap-2 rounded-2xl border bg-card p-4 shadow-xs">
             <h2 className="text-lg font-semibold">Meta de início cumprida, por classe</h2>

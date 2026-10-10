@@ -1,6 +1,7 @@
 import { celula, textoLivre } from "./csv";
+import { chaveDia, diasEntre, rotuloDia } from "./fuso";
 import { prioridadeAtual } from "./prioridade";
-import { mediana, percentil, temposChamado, type TemposChamado } from "./tempo";
+import { mediana, minutosPausados, percentil, temposChamado, type TemposChamado } from "./tempo";
 import type { Chamado, Classe, ConfigPriorizacao, Instante } from "./tipos";
 
 export interface ResumoTempo {
@@ -71,6 +72,126 @@ export function porMaquina(chamados: Chamado[]): LinhaMaquina[] {
       return { maquina, chamados: lista.length, paradoMin, erroMaisFrequente: erro };
     })
     .sort((a, b) => b.paradoMin - a.paradoMin);
+}
+
+// ---------------------------------------------------------------- gráficos
+
+export const TRECHOS = ["reacao", "deslocamento", "reparo", "pausas", "liberacao"] as const;
+export type Trecho = (typeof TRECHOS)[number];
+
+export const ROTULOS_TRECHO: Record<Trecho, string> = {
+  reacao: "Reação (T1−T0)",
+  deslocamento: "Deslocamento (T2−T1)",
+  reparo: "Reparo líquido",
+  pausas: "Pausas",
+  liberacao: "Liberação (T5−T4)",
+};
+
+export type AgrupamentoDecomposicao = "maquina" | "classe";
+
+export interface GrupoDecomposicao {
+  grupo: string;
+  n: number;
+  /** Médias somáveis: a soma dos trechos é a indisponibilidade média. */
+  media: Record<Trecho, number>;
+  mediana: Record<Trecho, number>;
+  indisponibilidadeMedia: number;
+}
+
+export interface Decomposicao {
+  grupos: GrupoDecomposicao[];
+  /** Chamados com todos os marcos T0, T1, T2, T4 e T5. */
+  n: number;
+  total: number;
+}
+
+/**
+ * Os cinco trechos de um chamado, em minutos. Reparo líquido e pausas contam só as pausas
+ * dentro da atuação (T2 a T4), então a soma é exatamente T5−T0. Null se faltar algum marco.
+ */
+export function trechosChamado(c: Pick<Chamado, "marcos" | "pausas">): Record<Trecho, number> | null {
+  const { abertura, recebido, inicio, fimAtuacao, liberado } = c.marcos;
+  if (recebido === undefined || inicio === undefined || fimAtuacao === undefined || liberado === undefined) return null;
+  const min = (a: number, b: number) => (b - a) / 60_000;
+  const pausas = minutosPausados(c.pausas, inicio, fimAtuacao);
+  return {
+    reacao: min(abertura, recebido),
+    deslocamento: min(recebido, inicio),
+    reparo: min(inicio, fimAtuacao) - pausas,
+    pausas,
+    liberacao: min(fimAtuacao, liberado),
+  };
+}
+
+const media = (v: number[]) => (v.length === 0 ? 0 : v.reduce((s, x) => s + x, 0) / v.length);
+
+/** "Para onde vai o tempo do chamado": média de cada trecho por máquina ou por classe. */
+export function decomposicaoTempo(
+  chamados: Chamado[],
+  agrupamento: AgrupamentoDecomposicao,
+  config: ConfigPriorizacao,
+): Decomposicao {
+  const grupos = new Map<string, Record<Trecho, number>[]>();
+  for (const c of chamados) {
+    const t = trechosChamado(c);
+    if (t === null) continue;
+    // Mesma classe da tabela de metas: a vigente no início do atendimento.
+    const chave = agrupamento === "maquina" ? c.maquinaNome : prioridadeAtual(c, c.marcos.inicio!, config).classe;
+    grupos.set(chave, [...(grupos.get(chave) ?? []), t]);
+  }
+  const lista = [...grupos.entries()].map(([grupo, ts]) => {
+    const porTrecho = (f: (v: number[]) => number) =>
+      Object.fromEntries(TRECHOS.map((k) => [k, f(ts.map((t) => t[k]))])) as Record<Trecho, number>;
+    const m = porTrecho(media);
+    return {
+      grupo,
+      n: ts.length,
+      media: m,
+      mediana: porTrecho((v) => mediana(v) ?? 0),
+      indisponibilidadeMedia: TRECHOS.reduce((s, k) => s + m[k], 0),
+    };
+  });
+  return {
+    grupos: lista.sort((a, b) => b.indisponibilidadeMedia - a.indisponibilidadeMedia),
+    n: lista.reduce((s, g) => s + g.n, 0),
+    total: chamados.length,
+  };
+}
+
+/** Abaixo disso a mediana do dia é instável (ponto vazado no gráfico). */
+export const MIN_CHAMADOS_DIA = 3;
+
+export interface PontoDiario {
+  /** "AAAA-MM-DD" em Recife. */
+  dia: string;
+  rotulo: string;
+  encerrados: number;
+  /** Null nos dias sem chamado com T2: a linha não atravessa o vazio. */
+  esperaMediana: number | null;
+  nEspera: number;
+}
+
+/** Chamados por dia de abertura (T0, fuso America/Recife), com todos os dias do intervalo. */
+export function serieDiaria(chamados: Chamado[], desde: Instante, ate: Instante): PontoDiario[] {
+  const porDia = new Map<string, Chamado[]>();
+  chamados.forEach((c) => {
+    const k = chaveDia(c.marcos.abertura);
+    porDia.set(k, [...(porDia.get(k) ?? []), c]);
+  });
+  return diasEntre(desde, ate).map((t) => {
+    const lista = porDia.get(chaveDia(t)) ?? [];
+    const esperas = lista.flatMap((c) => {
+      const e = temposChamado(c).esperaMin;
+      return e === null ? [] : [e];
+    });
+    return {
+      dia: chaveDia(t),
+      rotulo: rotuloDia(t),
+      encerrados: lista.length,
+      esperaMediana: mediana(esperas),
+      nEspera: esperas.length,
+    };
+  });
 }
 
 const iso = (t?: Instante) => (t === undefined ? "" : new Date(t).toISOString());

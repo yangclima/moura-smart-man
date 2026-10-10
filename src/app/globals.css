@@ -56,10 +56,22 @@
   --moura-laranja: #f9a01b;
   --moura-marinho: #0a1658;
 
-  /* Histórico MES × SAP: tons da marca ajustados para gráfico (validados para daltonismo). */
-  --hist-conciliado: #2b44b8;
-  --hist-producao: #d99400;
-  --hist-manutencao: #5aa0e0;
+  /* Gráficos dos indicadores: definidos uma vez e usados nas duas abas. */
+  /* Classes da conciliação: as mesmas do notebook. */
+  --hist-conciliado: #2a78d6;
+  --hist-producao: #fdb814;
+  --hist-manutencao: #0f2185;
+  /* Uma cor fixa por máquina (paleta Okabe-Ito, segura para daltonismo). */
+  --maq-a: #0072b2;
+  --maq-b: #e69f00;
+  --maq-c: #009e73;
+  --maq-d: #cc79a7;
+  /* Trechos do chamado (T0 → T5). */
+  --trecho-reacao: #fdb814;
+  --trecho-deslocamento: #3571b8;
+  --trecho-reparo: #0f2185;
+  --trecho-pausas: #a3a9b8;
+  --trecho-liberacao: #2f9e6b;
 
   --background: oklch(0.982 0.004 264);
   --foreground: oklch(0.2 0.04 268);
@@ -123,9 +135,18 @@
   --sidebar-accent-foreground: oklch(0.97 0.005 264);
   --sidebar-border: oklch(1 0 0 / 12%);
   --sidebar-ring: var(--moura-amarelo);
-  --hist-conciliado: #7d93f0;
-  --hist-producao: #f0b429;
-  --hist-manutencao: #8cc4f5;
+  /* No fundo marinho, o azul escuro some: clareia mantendo a ordem de tons. */
+  --hist-conciliado: #4f97ec;
+  --hist-producao: #fdb814;
+  --hist-manutencao: #c3ccff;
+  --maq-a: #56b4e9;
+  --maq-b: #e69f00;
+  --maq-c: #2fc59a;
+  --maq-d: #e8a0c8;
+  --trecho-deslocamento: #5b9be6;
+  --trecho-reparo: #c3ccff;
+  --trecho-pausas: #7d8499;
+  --trecho-liberacao: #4cc38a;
 }
 
 @theme inline {
@@ -137,6 +158,10 @@
   --color-hist-conciliado: var(--hist-conciliado);
   --color-hist-producao: var(--hist-producao);
   --color-hist-manutencao: var(--hist-manutencao);
+  --color-maq-a: var(--maq-a);
+  --color-maq-b: var(--maq-b);
+  --color-maq-c: var(--maq-c);
+  --color-maq-d: var(--maq-d);
 }
 
 @layer base {

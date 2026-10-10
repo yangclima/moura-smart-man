@@ -24,6 +24,7 @@ import {
 import { AntesDepois, type ResumoOperacao } from "./AntesDepois";
 import { CartaoTempo } from "./CartaoTempo";
 import { DetalheEvento } from "./DetalheEvento";
+import { GraficoSerieMensal } from "./graficos/GraficoSerieMensal";
 import { ListaEventos } from "./ListaEventos";
 import { QualidadeConciliacaoBloco } from "./QualidadeConciliacao";
 import { TabelaCruzadaBloco } from "./TabelaCruzada";
@@ -162,6 +163,8 @@ export function AbaHistorico({ operacao }: { operacao: ResumoOperacao }) {
       <QualidadeConciliacaoBloco qualidade={qualidadeConciliacao(filtrados)} onAbrir={abrirLista} />
 
       <TabelaMaquinasHistorico linhas={porMaquinaHistorico(filtrados.eventos)} onAbrir={abrirLista} />
+
+      <GraficoSerieMensal eventos={filtrados.eventos} onAbrir={abrirLista} />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <TabelaCruzadaBloco

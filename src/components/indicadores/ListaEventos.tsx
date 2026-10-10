@@ -115,6 +115,10 @@ export function ListaEventos({ ref, eventos, motivos, filtro, onFiltro, onSeleci
         {filtro.divergencia && (
           <Chip onRemover={() => mudar({ divergencia: undefined })}>{ROTULOS_DIVERGENCIA[filtro.divergencia]}</Chip>
         )}
+        {filtro.periodo && <Chip onRemover={() => mudar({ periodo: undefined })}>{`Parada em ${filtro.periodo.rotulo}`}</Chip>}
+        {filtro.quebra !== undefined && (
+          <Chip onRemover={() => mudar({ quebra: undefined })}>{filtro.quebra ? "Com quebra" : "Sem quebra"}</Chip>
+        )}
         {temFiltro && (
           <Button variant="ghost" size="sm" onClick={() => onFiltro({})}>
             Limpar filtros

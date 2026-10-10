@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { eventoDeLinha, type EventoHistorico } from "./historico";
 import {
+  distribuicaoEspera,
   divergencias,
   entraNasMetricas,
   filtrarHistorico,
@@ -10,6 +11,7 @@ import {
   motivosSemPar,
   porMaquinaHistorico,
   qualidadeConciliacao,
+  serieMensal,
   temposHistorico,
 } from "./indicadores-historico";
 
@@ -31,6 +33,7 @@ function evento(parcial: Partial<EventoHistorico>): EventoHistorico {
     equipamentoMes: "ROLOS",
     familiaMes: "QUEBRA",
     componenteMes: "FD",
+    contemQuebra: true,
     mesInicio: em(0),
     mesFim: em(60),
     indisponibilidadeH: 1,
@@ -243,5 +246,71 @@ describe("gerarCsvHistorico", () => {
     expect(linha).toContain('"troca; rolo"');
     expect(linha).toContain("2026-01-10 08:00");
     expect(gerarCsvHistorico([evento({ textoSap: "=SOMA(A1)" })])).toContain(";'=SOMA(A1);");
+  });
+});
+
+describe("distribuicaoEspera", () => {
+  it("usa só os pares confiáveis e conta os valores fora do eixo de ±120 min", () => {
+    const [a] = distribuicaoEspera([
+      ...[-200, -10, 0, 10, 20, 30, 40, 50, 60, 300].map((m, i) => evento({ idEvento: `A-${i}`, esperaAteAtuacaoMin: m })),
+      evento({ confianca: "baixa", esperaAteAtuacaoMin: 999 }),
+      mesSemSap(),
+    ]);
+    expect(a).toMatchObject({ maquina: "A", n: 10, abaixo: 1, acima: 1, mediana: 25 });
+    expect(a.p25).toBeLessThan(a.mediana!);
+    expect(a.p90).toBeGreaterThan(a.p75!);
+  });
+});
+
+describe("serieMensal", () => {
+  const dia = (ano: number, mes: number, d: number) => Date.UTC(ano, mes, d, 12);
+
+  it("agrupa por mês quando há 4 meses ou mais e marca as pontas incompletas", () => {
+    const s = serieMensal(
+      [
+        mesSemSap({ mesInicio: dia(2026, 0, 15), indisponibilidadeH: 2 }),
+        evento({ mesInicio: dia(2026, 1, 1), indisponibilidadeH: 1 }),
+        evento({ mesInicio: dia(2026, 1, 28), indisponibilidadeH: 0.5, maquina: "B" }),
+        evento({ mesInicio: dia(2026, 4, 20), indisponibilidadeH: 3 }),
+        sapSemMes({ maquina: "C" }),
+      ],
+      "horas",
+    );
+    expect(s.granularidade).toBe("mes");
+    expect(s.maquinas).toEqual(["A", "B"]);
+    expect(s.periodos.map((p) => p.rotulo)).toEqual(["jan/26", "fev/26", "mar/26", "abr/26", "mai/26"]);
+    expect(s.periodos.map((p) => p.incompleto)).toEqual([true, false, false, false, true]);
+    expect(s.periodos[1].valores).toEqual({ A: 1, B: 0.5 });
+    expect(s.periodos[2].valores).toEqual({ A: 0, B: 0 });
+  });
+
+  it("agrupa por semana (segunda a domingo) com menos de 4 meses e conta quebras", () => {
+    const s = serieMensal(
+      [
+        evento({ mesInicio: dia(2026, 9, 5), contemQuebra: true }), // segunda
+        evento({ mesInicio: dia(2026, 9, 11), contemQuebra: false }), // domingo
+        evento({ mesInicio: dia(2026, 9, 12), contemQuebra: true }),
+      ],
+      "quebras",
+    );
+    expect(s.granularidade).toBe("semana");
+    expect(s.periodos.map((p) => [p.rotulo, p.valores.A, p.n.A])).toEqual([
+      ["05/10", 1, 1],
+      ["12/10", 1, 1],
+    ]);
+  });
+
+  it("filtra a lista pelo período e pelas quebras do ponto clicado", () => {
+    const s = serieMensal([evento({ mesInicio: dia(2026, 9, 5) }), evento({ idEvento: "x", mesInicio: dia(2026, 9, 12) })], "horas");
+    const [p] = s.periodos;
+    const lista = filtrarLista([evento({ mesInicio: dia(2026, 9, 5) }), evento({ idEvento: "x", mesInicio: dia(2026, 9, 12) })], {
+      periodo: { inicio: p.inicio, fim: p.fim, rotulo: p.rotulo },
+      quebra: true,
+    });
+    expect(lista.map((e) => e.idEvento)).toEqual(["A-EV0001"]);
+  });
+
+  it("devolve série vazia sem paradas", () => {
+    expect(serieMensal([sapSemMes()], "horas").periodos).toEqual([]);
   });
 });

@@ -78,6 +78,7 @@ export default function Indicadores() {
           <TabsContent value="operacao" forceMount className={CONTEUDO_ABA}>
             <AbaOperacao
               periodo={periodo}
+              desde={desde}
               onPeriodo={setPeriodo}
               encerrados={encerrados}
               tempos={tempos}
