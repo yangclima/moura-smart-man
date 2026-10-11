@@ -22,7 +22,7 @@ export interface LinhaMaquina {
   erroMaisFrequente: string;
 }
 
-const CLASSES: Classe[] = ["P0", "P1", "P2", "P3", "P4"];
+const CLASSES: Classe[] = ["P0", "P1", "P2", "P3"];
 
 export function resumir(valores: (number | null)[]): ResumoTempo {
   const v = valores.filter((x): x is number => x !== null);

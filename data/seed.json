@@ -2729,7 +2729,7 @@
     }
   ],
   "config": {
-    "versao": 1,
+    "versao": 2,
     "pesos": {
       "c1": 0.42,
       "c2": 0.26,
@@ -2747,15 +2747,13 @@
     },
     "limiares": {
       "P1": 70,
-      "P2": 50,
-      "P3": 30
+      "P2": 50
     },
     "metaInicioMin": {
       "P0": 10,
       "P1": 15,
       "P2": 30,
-      "P3": 120,
-      "P4": null
+      "P3": 120
     },
     "reincidenciaDias": 7
   }

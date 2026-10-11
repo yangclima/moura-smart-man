@@ -58,8 +58,7 @@ export function classe(
   if (riscoPessoas) return "P0";
   if (scoreEf >= limiares.P1) return "P1";
   if (scoreEf >= limiares.P2) return "P2";
-  if (scoreEf >= limiares.P3) return "P3";
-  return "P4";
+  return "P3";
 }
 
 export function esperaMin(chamado: Pick<Chamado, "marcos">, agora: number): number {
@@ -87,7 +86,7 @@ export function prioridadeAtual(
   };
 }
 
-const RANK_CLASSE: Record<Classe, number> = { P0: 0, P1: 1, P2: 2, P3: 3, P4: 4 };
+const RANK_CLASSE: Record<Classe, number> = { P0: 0, P1: 1, P2: 2, P3: 3 };
 
 /**
  * Ordem da fila: P0 primeiro; depois a classe (o override do líder define a

@@ -6,7 +6,6 @@ export const COR_CLASSE: Record<Classe, string> = {
   P1: "bg-p1 text-white",
   P2: "bg-p2 text-black",
   P3: "bg-p3 text-white",
-  P4: "bg-p4 text-white",
 };
 
 export const BARRA_CLASSE: Record<Classe, string> = {
@@ -14,7 +13,6 @@ export const BARRA_CLASSE: Record<Classe, string> = {
   P1: "border-l-p1",
   P2: "border-l-p2",
   P3: "border-l-p3",
-  P4: "border-l-p4",
 };
 
 /** A cor nunca aparece sozinha: o texto da classe vai sempre junto. */

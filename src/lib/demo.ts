@@ -60,7 +60,7 @@ async function criarHistoricoReincidencia(cat: Catalogo, usuario: Usuario): Prom
     solicitante_nome: "Maria (demo)",
     responsavel_nome: "João (demo)",
     status: "encerrado",
-    prioridade: { scoreBase: 0, classeBase: "P4", criterios: { c1: 0, c2: 0, c3: 0, c4: 0, c5: 0 }, versaoConfig: 0 },
+    prioridade: { scoreBase: 0, classeBase: "P3", criterios: { c1: 0, c2: 0, c3: 0, c4: 0, c5: 0 }, versaoConfig: 0 },
     abertura: ts(0),
     recebido: ts(4),
     inicio: ts(11),

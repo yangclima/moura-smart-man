@@ -11,7 +11,7 @@ export type Status =
   | "aguardando_liberacao"
   | "encerrado"
   | "cancelado";
-export type Classe = "P0" | "P1" | "P2" | "P3" | "P4";
+export type Classe = "P0" | "P1" | "P2" | "P3";
 export type Impacto = "gargalo" | "sem_redundancia" | "com_redundancia";
 
 export const STATUS_ABERTOS: Status[] = [
@@ -164,17 +164,18 @@ export interface ConfigPriorizacao {
   pesos: Criterios;
   condicao: Record<Condicao, number>;
   aging: { ptsPorMin: number; maxPts: number };
-  limiares: { P1: number; P2: number; P3: number };
+  /** Score efetivo mínimo de cada classe; abaixo de P2 é P3. */
+  limiares: { P1: number; P2: number };
   metaInicioMin: Record<Classe, number | null>;
   reincidenciaDias: number;
 }
 
 export const CONFIG_PADRAO: ConfigPriorizacao = {
-  versao: 1,
+  versao: 2,
   pesos: { c1: 0.42, c2: 0.26, c3: 0.16, c4: 0.1, c5: 0.06 },
   condicao: { parada: 1.0, restricao: 0.5 },
   aging: { ptsPorMin: 0.5, maxPts: 30 },
-  limiares: { P1: 70, P2: 50, P3: 30 },
-  metaInicioMin: { P0: 10, P1: 15, P2: 30, P3: 120, P4: null },
+  limiares: { P1: 70, P2: 50 },
+  metaInicioMin: { P0: 10, P1: 15, P2: 30, P3: 120 },
   reincidenciaDias: 7,
 };

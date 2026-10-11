@@ -26,7 +26,7 @@ function chamado(
     override: opts.override
       ? { classe: opts.override, justificativa: "x", por: "lider", em: instante(AGORA) }
       : null,
-    prioridade: { scoreBase: scoreBase(c, CFG.pesos), classeBase: "P4", criterios: c, versaoConfig: 1 },
+    prioridade: { scoreBase: scoreBase(c, CFG.pesos), classeBase: "P3", criterios: c, versaoConfig: 1 },
     marcos: {
       abertura: instante(abertura),
       ...(opts.inicioMin !== undefined ? { inicio: instante(abertura + min(opts.inicioMin)) } : {}),
@@ -78,8 +78,9 @@ describe("classe", () => {
   it("respeita os limiares", () => {
     expect(classe(70, false, CFG.limiares)).toBe("P1");
     expect(classe(69.9, false, CFG.limiares)).toBe("P2");
-    expect(classe(30, false, CFG.limiares)).toBe("P3");
-    expect(classe(29.9, false, CFG.limiares)).toBe("P4");
+    expect(classe(50, false, CFG.limiares)).toBe("P2");
+    expect(classe(49.9, false, CFG.limiares)).toBe("P3");
+    expect(classe(0, false, CFG.limiares)).toBe("P3");
   });
 
   it("um chamado P3 esperando 60 minutos ganha +30 pontos e sobe de classe", () => {
@@ -92,7 +93,7 @@ describe("classe", () => {
 
   it("override do líder define a classe vigente", () => {
     const p = prioridadeAtual(chamado(ZERO, { override: "P1" }), AGORA, CFG);
-    expect(p.classeCalculada).toBe("P4");
+    expect(p.classeCalculada).toBe("P3");
     expect(p.classe).toBe("P1");
   });
 });
@@ -145,8 +146,10 @@ describe("estourouMeta", () => {
     expect(estourouMeta(chamado(p1, { esperaMin: 60, inicioMin: 5 }), AGORA, CFG)).toBe("ok");
   });
 
-  it("P4 não tem meta e P0 estoura após 10 minutos", () => {
+  it("P3 estoura após 120 minutos e P0 após 10 minutos", () => {
     expect(estourouMeta(chamado(ZERO, { esperaMin: 0 }), AGORA, CFG)).toBe("ok");
+    expect(estourouMeta(chamado(ZERO, { esperaMin: 100 }), AGORA, CFG)).toBe("atencao");
+    expect(estourouMeta(chamado(ZERO, { esperaMin: 121 }), AGORA, CFG)).toBe("estourado");
     expect(estourouMeta(chamado(ZERO, { risco: true, esperaMin: 5 }), AGORA, CFG)).toBe("ok");
     expect(estourouMeta(chamado(ZERO, { risco: true, esperaMin: 9 }), AGORA, CFG)).toBe("atencao");
     expect(estourouMeta(chamado(ZERO, { risco: true, esperaMin: 11 }), AGORA, CFG)).toBe("estourado");

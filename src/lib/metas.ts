@@ -2,7 +2,7 @@
 import { supabase } from "./supabase";
 import type { Classe, ConfigPriorizacao } from "./tipos";
 
-export const CLASSES_META: Classe[] = ["P0", "P1", "P2", "P3", "P4"];
+export const CLASSES_META: Classe[] = ["P0", "P1", "P2", "P3"];
 /** Teto de um dia: acima disso a meta deixa de ser útil para a fila. */
 export const META_MAXIMA_MIN = 1440;
 

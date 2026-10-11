@@ -62,7 +62,7 @@ export const TRANSICOES: Record<Acao, Transicao> = {
 };
 
 export const MIN_JUSTIFICATIVA = 15;
-export const CLASSES: Classe[] = ["P0", "P1", "P2", "P3", "P4"];
+export const CLASSES: Classe[] = ["P0", "P1", "P2", "P3"];
 
 export interface DadosAcao {
   motivo?: string;

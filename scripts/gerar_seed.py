@@ -160,12 +160,12 @@ def montar_seed(pasta: Path) -> dict:
                 })
 
     config = {
-        "versao": 1,
+        "versao": 2,
         "pesos": {"c1": 0.42, "c2": 0.26, "c3": 0.16, "c4": 0.10, "c5": 0.06},
         "condicao": {"parada": 1.0, "restricao": 0.5},
         "aging": {"ptsPorMin": 0.5, "maxPts": 30},
-        "limiares": {"P1": 70, "P2": 50, "P3": 30},
-        "metaInicioMin": {"P0": 10, "P1": 15, "P2": 30, "P3": 120, "P4": None},
+        "limiares": {"P1": 70, "P2": 50},
+        "metaInicioMin": {"P0": 10, "P1": 15, "P2": 30, "P3": 120},
         "reincidenciaDias": REINCIDENCIA_DIAS,
     }
     return {"maquinas": maquinas, "subdivisoes": subdivisoes, "erros": erros, "config": config}
