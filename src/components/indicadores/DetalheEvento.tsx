@@ -33,14 +33,17 @@ function Bloco({ titulo, children }: { titulo: string; children: ReactNode }) {
 
 interface DetalheEventoProps {
   evento: EventoHistorico | undefined;
+  /** idEvento das quebras reincidentes (histórico completo). */
+  reincidentes: Set<string>;
   onFechar: () => void;
 }
 
 /** Painel lateral: do indicador até o evento que o originou (Subproduto 4). */
-export function DetalheEvento({ evento: e, onFechar }: DetalheEventoProps) {
+export function DetalheEvento({ evento: e, reincidentes, onFechar }: DetalheEventoProps) {
   const flags = e
     ? [
         precisaRevisao(e) && "revisar",
+        reincidentes.has(e.idEvento) && "reincidente",
         e.ambiguo && "ambíguo",
         e.ordemLonga && "ordem longa",
         e.possivelDuplicidadeSap && "possível duplicidade no SAP",
@@ -92,6 +95,7 @@ export function DetalheEvento({ evento: e, onFechar }: DetalheEventoProps) {
                 <Campo rotulo="Família">{e.familiaMes}</Campo>
                 <Campo rotulo="Registros de origem">{e.idsRegistroMes.join(", ")}</Campo>
                 <Campo rotulo="Indisponibilidade">{horas(e.indisponibilidadeH)}</Campo>
+                {e.microParada && <Campo rotulo="Micro-parada">sim</Campo>}
               </Bloco>
 
               <Bloco titulo="Manutenção (SAP)">

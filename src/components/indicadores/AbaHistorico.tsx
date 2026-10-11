@@ -8,15 +8,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useHistorico } from "@/hooks/useHistorico";
 import { baixarCsv, dataLocal } from "@/lib/csv";
 import {
+  componentesReincidentes,
+  confiabilidadePorMaquina,
   divergencias,
   filtrarHistorico,
   filtrarLista,
   gerarCsvHistorico,
+  janelaObservacao,
   maquinasDoHistorico,
   mesesDoHistorico,
   motivosSemPar,
   porMaquinaHistorico,
+  porTipoManutencao,
   qualidadeConciliacao,
+  quebrasReincidentes,
+  reincidenciaPorMaquina,
   temposHistorico,
   type FiltroHistorico,
   type FiltroLista,
@@ -24,9 +30,11 @@ import {
 import { AntesDepois, type ResumoOperacao } from "./AntesDepois";
 import { CartaoTempo } from "./CartaoTempo";
 import { DetalheEvento } from "./DetalheEvento";
+import { GraficoPareto } from "./graficos/GraficoPareto";
 import { GraficoSerieMensal } from "./graficos/GraficoSerieMensal";
 import { ListaEventos } from "./ListaEventos";
 import { QualidadeConciliacaoBloco } from "./QualidadeConciliacao";
+import { TabelaConfiabilidade } from "./TabelaConfiabilidade";
 import { TabelaCruzadaBloco } from "./TabelaCruzada";
 import { TabelaMaquinasHistorico } from "./TabelaMaquinasHistorico";
 
@@ -50,7 +58,13 @@ export function AbaHistorico({ operacao }: { operacao: ResumoOperacao }) {
   const maquinas = useMemo(() => maquinasDoHistorico(dados.eventos), [dados]);
   const meses = useMemo(() => mesesDoHistorico(dados.eventos), [dados]);
   const filtrados = useMemo(() => filtrarHistorico(dados, filtro), [dados, filtro]);
-  const naLista = useMemo(() => filtrarLista(filtrados.eventos, filtroLista), [filtrados, filtroLista]);
+  // Reincidência e janela vêm do histórico completo; só as contagens respeitam os filtros.
+  const reincidentes = useMemo(() => quebrasReincidentes(dados.eventos), [dados]);
+  const janela = useMemo(() => janelaObservacao(dados.eventos, filtro.mes), [dados, filtro.mes]);
+  const naLista = useMemo(
+    () => filtrarLista(filtrados.eventos, filtroLista, reincidentes),
+    [filtrados, filtroLista, reincidentes],
+  );
   const evento = selecionado ? dados.eventos.find((e) => e.idEvento === selecionado) : undefined;
 
   const tempos = temposHistorico(filtrados.eventos);
@@ -62,7 +76,7 @@ export function AbaHistorico({ operacao }: { operacao: ResumoOperacao }) {
   }
 
   function exportar() {
-    baixarCsv(gerarCsvHistorico(naLista), `historico-conciliado-${filtro.maquina ?? TODAS}-${dataLocal()}.csv`);
+    baixarCsv(gerarCsvHistorico(naLista, reincidentes),`historico-conciliado-${filtro.maquina ?? TODAS}-${dataLocal()}.csv`);
   }
 
   if (carregando) return <Carregando texto="Carregando o histórico conciliado…" />;
@@ -70,7 +84,7 @@ export function AbaHistorico({ operacao }: { operacao: ResumoOperacao }) {
   if (dados.eventos.length === 0) {
     return (
       <p className="text-muted-foreground">
-        Nenhum evento conciliado no banco. Rode <code>carregar_conciliacao.py</code> para carregar o histórico.
+        Nenhum evento conciliado no banco. Rode <code>scripts/carregar_conciliacao.py</code> para carregar o histórico (veja o README).
       </p>
     );
   }
@@ -164,7 +178,26 @@ export function AbaHistorico({ operacao }: { operacao: ResumoOperacao }) {
 
       <TabelaMaquinasHistorico linhas={porMaquinaHistorico(filtrados.eventos)} onAbrir={abrirLista} />
 
+      {janela && (
+        <TabelaConfiabilidade
+          linhas={confiabilidadePorMaquina(filtrados.eventos, janela)}
+          reincidencia={reincidenciaPorMaquina(filtrados.eventos, reincidentes)}
+          componentes={componentesReincidentes(filtrados.eventos, reincidentes)}
+          janela={janela}
+          onAbrir={abrirLista}
+        />
+      )}
+
       <GraficoSerieMensal eventos={filtrados.eventos} onAbrir={abrirLista} />
+
+      <GraficoPareto eventos={filtrados.eventos} maquina={filtro.maquina} onAbrir={abrirLista} />
+
+      <TabelaCruzadaBloco
+        titulo="Eventos com ordem, por tipo de manutenção"
+        nota="Quando uma parada recebeu várias ordens, conta o tipo da ordem de maior score."
+        tabela={porTipoManutencao(filtrados.eventos)}
+        onAbrir={(chave, maquina) => abrirLista({ tipoSap: chave, maquina })}
+      />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <TabelaCruzadaBloco
@@ -189,7 +222,7 @@ export function AbaHistorico({ operacao }: { operacao: ResumoOperacao }) {
         onSelecionar={setSelecionado}
       />
 
-      <DetalheEvento evento={evento} onFechar={() => setSelecionado(null)} />
+      <DetalheEvento evento={evento} reincidentes={reincidentes} onFechar={() => setSelecionado(null)} />
     </div>
   );
 }

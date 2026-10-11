@@ -35,6 +35,12 @@ export function chaveDia(t: Instante): string {
   return `${d.ano}-${dois(d.mes + 1)}-${dois(d.dia)}`;
 }
 
+/** "AAAA-MM-DD hh:mm" em Recife, formato que o Excel reconhece como data. */
+export function dataHoraRecife(t: Instante): string {
+  const d = new Date(t - DESLOCAMENTO_MS);
+  return `${chaveDia(t)} ${dois(d.getUTCHours())}:${dois(d.getUTCMinutes())}`;
+}
+
 /** "dd/mm" do dia em Recife. */
 export function rotuloDia(t: Instante): string {
   const d = dataRecife(t);

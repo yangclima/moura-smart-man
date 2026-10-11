@@ -119,6 +119,13 @@ export function ListaEventos({ ref, eventos, motivos, filtro, onFiltro, onSeleci
         {filtro.quebra !== undefined && (
           <Chip onRemover={() => mudar({ quebra: undefined })}>{filtro.quebra ? "Com quebra" : "Sem quebra"}</Chip>
         )}
+        {filtro.componente && <Chip onRemover={() => mudar({ componente: undefined })}>{`Componente ${filtro.componente}`}</Chip>}
+        {filtro.tipoSap && <Chip onRemover={() => mudar({ tipoSap: undefined })}>{`Tipo ${filtro.tipoSap}`}</Chip>}
+        {filtro.reincidente !== undefined && (
+          <Chip onRemover={() => mudar({ reincidente: undefined })}>
+            {filtro.reincidente ? "Quebras reincidentes" : "Não reincidentes"}
+          </Chip>
+        )}
         {temFiltro && (
           <Button variant="ghost" size="sm" onClick={() => onFiltro({})}>
             Limpar filtros

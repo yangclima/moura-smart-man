@@ -28,6 +28,8 @@ export interface EventoHistorico {
   componenteMes: string | null;
   /** A parada do MES inclui ao menos um registro de quebra. */
   contemQuebra: boolean;
+  /** Parada inteira com menos de 2 min (MICRO_PARADA_MIN do tratamento). */
+  microParada: boolean;
   mesInicio?: Instante;
   mesFim?: Instante;
   indisponibilidadeH: number | null;
@@ -92,6 +94,8 @@ export function eventoDeLinha(r: Linha): EventoHistorico {
     familiaMes: textoOuNulo(r.familia_mes),
     componenteMes: textoOuNulo(r.componente_mes),
     contemQuebra: Boolean(r.contem_quebra),
+    // Nulo no "SAP sem MES", que não tem parada.
+    microParada: Boolean(r.micro_parada),
     mesInicio: ms(r.mes_inicio),
     mesFim: ms(r.mes_fim),
     indisponibilidadeH: numero(r.indisponibilidade_h),

@@ -25,7 +25,12 @@ export function TabelaMaquinasHistorico({ linhas, onAbrir }: Props) {
             <TableHead>Máquina</TableHead>
             <TableHead className="text-right">Eventos</TableHead>
             <TableHead className="text-right">Tempo parado</TableHead>
-            <TableHead className="text-right">Atuação SAP</TableHead>
+            <TableHead className="text-right" title="Soma do tempo das ordens SAP dentro das paradas conciliadas (MES + SAP)">
+              Atuação na parada
+            </TableHead>
+            <TableHead className="text-right" title="Soma do tempo das ordens SAP sem parada correspondente (SAP sem MES)">
+              Ordens sem parada
+            </TableHead>
             <TableHead className="text-right" title="Paradas sem ordem ÷ eventos com parada no MES">
               % MES sem SAP
             </TableHead>
@@ -45,7 +50,15 @@ export function TabelaMaquinasHistorico({ linhas, onAbrir }: Props) {
                 </BotaoNumero>
               </TableCell>
               <TableCell className="text-right tabular-nums">{formatarMinutos(m.paradoH * MIN_POR_H)}</TableCell>
-              <TableCell className="text-right tabular-nums">{formatarMinutos(m.atuacaoH * MIN_POR_H)}</TableCell>
+              <TableCell className="text-right tabular-nums">{formatarMinutos(m.atuacaoNaParadaH * MIN_POR_H)}</TableCell>
+              <TableCell className="text-right">
+                <BotaoNumero
+                  rotulo={`Ver as ordens sem parada da máquina ${m.maquina}`}
+                  onClick={() => onAbrir({ maquina: m.maquina, classe: "SAP sem MES" })}
+                >
+                  {formatarMinutos(m.atuacaoForaDeParadaH * MIN_POR_H)}
+                </BotaoNumero>
+              </TableCell>
               <TableCell className="text-right">
                 <BotaoNumero
                   rotulo={`Ver as ${m.mesSemSap} paradas sem ordem da máquina ${m.maquina}`}
@@ -67,6 +80,7 @@ export function TabelaMaquinasHistorico({ linhas, onAbrir }: Props) {
           ))}
         </TableBody>
       </Table>
+      <p className="text-xs text-muted-foreground">Ordens com mais de 24 h de calendário ficam fora das somas de atuação.</p>
     </section>
   );
 }

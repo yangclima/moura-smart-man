@@ -100,6 +100,28 @@ Pronto.
 
 Rodar de novo atualiza o catálogo e mantém os PINs. Para gerar PINs novos para as contas de demonstração, rode `npm run seed -- --novos-pins`.
 
+### 6.1 Carregar o histórico MES × SAP
+
+A aba **Histórico MES × SAP** de `/oficina/indicadores` lê as views `conc_eventos_atual` e `conc_vinculos_atual`. Elas são preenchidas por três passos, nesta ordem:
+
+1. `processamento_inicial.ipynb`: trata as extrações do MES e do SAP.
+2. `conciliacao_mes_sap.ipynb`: concilia paradas e ordens e grava `conc_eventos`, `conc_vinculo` e `parametros_conciliacao.json` em `data/processed`.
+3. `scripts/carregar_conciliacao.py`: envia essa saída para o Supabase.
+
+```bash
+pip install -r scripts/requirements.txt
+export SUPABASE_URL="$NEXT_PUBLIC_SUPABASE_URL"         # mesmo valor do .env.local
+export SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SECRET_KEY" # mesmo valor do .env.local; nunca no front nem no git
+python scripts/carregar_conciliacao.py ./data/processed
+```
+
+O script lê `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY`. Os valores são os mesmos de `NEXT_PUBLIC_SUPABASE_URL` e `SUPABASE_SECRET_KEY` do `.env.local`; só os nomes mudam.
+
+Cada execução cria uma linha nova em `conc_execucoes` com os eventos e vínculos dela. As views `*_atual` passam a mostrar a execução mais recente automaticamente, sem apagar as anteriores. Se a carga falhar no meio, a execução é apagada e a tela volta a mostrar a anterior.
+
+**Quem roda e quando:** depois de cada nova extração do MES e do SAP (por exemplo, uma vez por semana).
+<!-- TODO: definir responsável e periodicidade -->
+
 ### 7. Testar localmente
 
 ```bash
@@ -171,6 +193,8 @@ A integração cobre:
 | `src/lib/chamados.ts`, `catalogo.ts`, `mapear.ts` | Acesso ao Supabase e conversão de linhas para os tipos do domínio |
 | `src/hooks/useTempoReal.ts` | Consulta e assinatura Realtime: recarrega a cada mudança |
 | `scripts/gerar_seed.py` → `data/seed.json` → `scripts/seed.ts` | Dados do case MES/SAP: 4 máquinas, 31 subdivisões, 207 erros |
+| `src/lib/indicadores-historico.ts` | Indicadores do histórico MES × SAP (funções puras): quebra, MTTR, MTBF, disponibilidade, reincidência, Pareto por componente, tipo de manutenção, filtros e CSV |
+| `scripts/carregar_conciliacao.py` | Carga da saída da conciliação no Supabase (`conc_execucoes`, `conc_eventos`, `conc_vinculos`) |
 
 ## Rotas
 
