@@ -52,7 +52,7 @@ export default function Indicadores() {
   return (
     <>
       <Cabecalho titulo="Indicadores" links={[{ href: "/oficina", rotulo: "TV" }]} />
-      <main className="mx-auto grid w-full max-w-6xl gap-6 p-4">
+      <main id="conteudo" className="mx-auto grid w-full max-w-6xl gap-6 p-4">
         <h1 className="text-3xl font-bold text-moura-azul">Indicadores</h1>
         <Tabs value={aba} onValueChange={trocarAba} className="gap-6">
           <TabsList>

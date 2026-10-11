@@ -42,9 +42,9 @@ export function QualidadeConciliacaoBloco({ qualidade, onAbrir }: Props) {
               const n = qualidade.confianca[c];
               const eventos = qualidade.confiancaEventos[c];
               return (
-                <div key={c} className="grid grid-cols-[9.5rem_1fr_auto_5.5rem] items-center gap-2 text-sm">
+                <div key={c} className="grid grid-cols-[1fr_auto_auto] items-center gap-x-3 gap-y-1 text-sm sm:grid-cols-[9.5rem_1fr_auto_5.5rem] sm:gap-2">
                   <dt>{ROTULO_CONFIANCA[c]}</dt>
-                  <dd className="h-3 rounded-r-sm bg-muted" aria-hidden>
+                  <dd className="h-3 rounded-r-sm bg-muted max-sm:order-last max-sm:col-span-3" aria-hidden>
                     <div className="h-3 rounded-r-sm bg-hist-conciliado" style={{ width: `${pct(n, maiorConfianca)}%` }} />
                   </dd>
                   <dd className="text-right tabular-nums">

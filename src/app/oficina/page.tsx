@@ -1,7 +1,8 @@
 "use client";
 
-import { ExpandIcon, Volume2Icon, WifiOffIcon } from "lucide-react";
+import { ArrowLeftIcon, ExpandIcon, LogOutIcon, Volume2Icon, WifiOffIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Carregando } from "@/components/Carregando";
 import { CartaoChamado } from "@/components/chamado/CartaoChamado";
@@ -12,7 +13,10 @@ import { useChamadosAbertos } from "@/hooks/useChamadosAbertos";
 import { useConfig } from "@/hooks/useConfig";
 import { useEquipe } from "@/hooks/useMantenedores";
 import { useRecursosTV } from "@/hooks/useRecursosTV";
+import { useUsuario } from "@/hooks/useUsuario";
+import { DESTINO_POR_PAPEL } from "@/lib/perfis";
 import { ordenarFila } from "@/lib/prioridade";
+import { supabase } from "@/lib/supabase";
 import { formatarCronometro } from "@/lib/tempo";
 import type { Chamado } from "@/lib/tipos";
 import { cn } from "@/lib/utils";
@@ -50,7 +54,7 @@ export default function PainelOficina() {
   return (
     <div className="dark flex min-h-dvh flex-col bg-background text-base text-foreground lg:h-dvh lg:overflow-hidden lg:text-2xl">
       {offline && (
-        <div className="flex items-center justify-center gap-2 bg-red-600 py-1 text-lg text-white">
+        <div role="status" className="flex items-center justify-center gap-2 bg-red-600 py-1 text-lg text-white">
           <WifiOffIcon className="size-5" /> Sem conexão — dados de{" "}
           {atualizadoEm ? new Date(atualizadoEm).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "—"}
         </div>
@@ -81,13 +85,11 @@ export default function PainelOficina() {
           <Button variant="ghost" size="icon-lg" onClick={tv.telaCheia} aria-label="Tela cheia" className="hidden text-white hover:bg-white/10 hover:text-white sm:inline-flex">
             <ExpandIcon />
           </Button>
-          <Button asChild variant="ghost" size="sm" className="text-white/80 hover:bg-white/10 hover:text-white">
-            <Link href="/login">Sair</Link>
-          </Button>
+          <SairDaTV />
         </div>
       </header>
 
-      <main className="grid min-h-0 flex-1 gap-4 p-3 sm:p-4 lg:grid-cols-[65fr_35fr]">
+      <main id="conteudo" className="grid min-h-0 flex-1 gap-4 p-3 sm:p-4 lg:grid-cols-[65fr_35fr]">
         <Coluna titulo={`Fila · ${fila.length}`} vazio="Nenhum chamado aguardando">
           {fila.map((c) => (
             <CartaoChamado key={c.id} chamado={c} agora={agora} config={config} destaque={novos.has(c.id)} />
@@ -107,6 +109,36 @@ export default function PainelOficina() {
         </div>
       </main>
     </div>
+  );
+}
+
+/** A conta da TV sai de fato; quem é da equipe só volta para a própria área. */
+function SairDaTV() {
+  const { usuario } = useUsuario();
+  const router = useRouter();
+  const estilo = "text-white/80 hover:bg-white/10 hover:text-white";
+
+  if (!usuario?.papel || usuario.papel === "oficina") {
+    return (
+      <Button
+        variant="ghost"
+        size="sm"
+        className={estilo}
+        onClick={async () => {
+          await supabase.auth.signOut();
+          router.replace("/login");
+        }}
+      >
+        <LogOutIcon /> Sair
+      </Button>
+    );
+  }
+  return (
+    <Button asChild variant="ghost" size="sm" className={estilo}>
+      <Link href={DESTINO_POR_PAPEL[usuario.papel]}>
+        <ArrowLeftIcon /> Voltar
+      </Link>
+    </Button>
   );
 }
 

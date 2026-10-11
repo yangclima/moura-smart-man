@@ -1,10 +1,11 @@
 "use client";
 
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, SearchXIcon } from "lucide-react";
 import Link from "next/link";
 import { use, useState } from "react";
 import { toast } from "sonner";
 import { Carregando } from "@/components/Carregando";
+import { EstadoTela } from "@/components/EstadoTela";
 import { BadgePrioridade } from "@/components/chamado/BadgePrioridade";
 import { SeloCondicao } from "@/components/chamado/CartaoChamado";
 import { Cronometro } from "@/components/chamado/Cronometro";
@@ -38,7 +39,23 @@ export function AcompanharChamado({ params }: { params: Promise<{ id: string }> 
   const [executando, setExecutando] = useState<Acao | null>(null);
 
   if (!op.pronto || carregando) return <Carregando />;
-  if (!chamado) return <p className="p-6 text-destructive">Chamado não encontrado.</p>;
+  if (!chamado) {
+    return (
+      <main id="conteudo">
+        <EstadoTela
+          icone={SearchXIcon}
+          titulo="Chamado não encontrado"
+          acoes={
+            <Button asChild className="h-12 rounded-xl px-5 text-base">
+              <Link href="/chamado">Ver chamados em aberto</Link>
+            </Button>
+          }
+        >
+          O link pode estar incompleto ou o chamado foi removido.
+        </EstadoTela>
+      </main>
+    );
+  }
 
   const ordem = ordenarFila(fila.chamados.filter((c) => c.status === "aberto"), agora, config);
   const chamadoId = chamado.id;
@@ -58,7 +75,7 @@ export function AcompanharChamado({ params }: { params: Promise<{ id: string }> 
   }
 
   return (
-    <main className="mx-auto grid w-full max-w-lg content-start gap-5 p-4">
+    <main id="conteudo" className="mx-auto grid w-full max-w-lg content-start gap-5 p-4">
       <header className="grid gap-1.5 rounded-2xl bg-moura-azul p-5 text-white shadow-md">
         <div className="flex items-center gap-2">
           <span className="rounded-md bg-white/15 px-2 py-0.5 font-mono text-sm">{chamado.numero}</span>

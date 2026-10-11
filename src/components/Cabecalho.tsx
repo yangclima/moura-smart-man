@@ -3,7 +3,7 @@
 import { LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { FaixaMoura, LogoMoura } from "@/components/marca/Marca";
 import { Button } from "@/components/ui/button";
 import { useUsuario } from "@/hooks/useUsuario";
@@ -44,6 +44,12 @@ export function Cabecalho({
   const router = useRouter();
   const rota = usePathname();
   const ativo = linkAtivo(links, rota);
+  const nav = useRef<HTMLElement>(null);
+
+  // No celular a navegação rola na horizontal: a seção atual sempre fica visível.
+  useEffect(() => {
+    nav.current?.querySelector('[aria-current="page"]')?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [ativo]);
 
   async function sair() {
     await supabase.auth.signOut();
@@ -73,15 +79,16 @@ export function Cabecalho({
               </span>
             </div>
           )}
-          <Button variant="ghost" size="icon" onClick={sair} aria-label="Sair" title="Sair">
+          <Button variant="ghost" size="icon" onClick={sair} aria-label="Sair" title="Sair" className="text-muted-foreground hover:text-destructive">
             <LogOutIcon />
           </Button>
         </div>
 
         {links.length > 0 && (
           <nav
+            ref={nav}
             aria-label="Seções"
-            className="-mx-4 flex w-[calc(100%+2rem)] gap-1 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:w-auto md:overflow-visible md:p-0"
+            className="rolagem-horizontal -mx-4 flex w-[calc(100%+2rem)] gap-1 overflow-x-auto px-4 pb-1 md:mx-0 md:w-auto md:overflow-visible md:p-0"
           >
             {links.map((l) => {
               const atual = l.href === ativo;
@@ -91,7 +98,7 @@ export function Cabecalho({
                   href={l.href}
                   aria-current={atual ? "page" : undefined}
                   className={cn(
-                    "shrink-0 rounded-full px-3.5 py-1.5 text-sm font-medium whitespace-nowrap transition-colors",
+                    "shrink-0 rounded-full px-3.5 py-1.5 text-sm font-medium whitespace-nowrap transition-colors pointer-coarse:py-2.5",
                     "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
                     atual
                       ? "bg-moura-azul text-white shadow-sm"

@@ -1,10 +1,11 @@
 "use client";
 
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, SearchXIcon, TriangleAlertIcon } from "lucide-react";
 import Link from "next/link";
 import { use, useState } from "react";
 import { toast } from "sonner";
 import { Carregando } from "@/components/Carregando";
+import { EstadoTela } from "@/components/EstadoTela";
 import { SeloCondicao } from "@/components/chamado/CartaoChamado";
 import { Cronometro } from "@/components/chamado/Cronometro";
 import { ExplicacaoPrioridade } from "@/components/chamado/ExplicacaoPrioridade";
@@ -43,7 +44,23 @@ export function AcoesChamado({ params }: { params: Promise<{ id: string }> }) {
   const [ocupado, setOcupado] = useState(false);
 
   if (carregando || !usuario) return <Carregando />;
-  if (!c) return <p className="text-destructive">Chamado não encontrado.</p>;
+  if (!c) {
+    return (
+      <EstadoTela
+        icone={SearchXIcon}
+        titulo="Chamado não encontrado"
+        acoes={
+          <Button asChild className="h-11 px-4">
+            <Link href="/manutencao">
+              <ArrowLeftIcon /> Voltar para a fila
+            </Link>
+          </Button>
+        }
+      >
+        O chamado pode ter sido cancelado ou o link está incompleto.
+      </EstadoTela>
+    );
+  }
   const chamadoId = c.id;
   const acoes = acoesDisponiveis(c, usuario);
 
@@ -77,7 +94,11 @@ export function AcoesChamado({ params }: { params: Promise<{ id: string }> }) {
           <span className="font-mono text-muted-foreground">{c.numero}</span>
           <Badge variant="outline">{STATUS_ROTULO[c.status]}</Badge>
           <SeloCondicao chamado={c} />
-          {c.riscoPessoas && <span className="font-semibold text-red-600">⚠ Risco a pessoas</span>}
+          {c.riscoPessoas && (
+            <span className="inline-flex items-center gap-1 font-semibold text-red-600">
+              <TriangleAlertIcon className="size-4" aria-hidden /> Risco a pessoas
+            </span>
+          )}
         </div>
         <h1 className="text-3xl leading-tight font-bold text-moura-azul">
           {c.maquinaNome} <span className="text-foreground/70">· {c.subdivisaoNome}</span>

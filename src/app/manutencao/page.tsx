@@ -35,7 +35,7 @@ export default function FilaManutencao() {
   return (
     <div className="grid gap-4">
       {offline && (
-        <p className="flex items-center justify-center gap-2 rounded-xl bg-red-600 p-2.5 text-center font-medium text-white">
+        <p role="status" className="flex items-center justify-center gap-2 rounded-xl bg-red-600 p-2.5 text-center font-medium text-white">
           <WifiOffIcon className="size-4" /> Sem conexão
         </p>
       )}

@@ -1,5 +1,8 @@
+import type { Metadata } from "next";
 import { Cabecalho } from "@/components/Cabecalho";
 import { Protegido } from "@/components/Protegido";
+
+export const metadata: Metadata = { title: "Engenharia" };
 
 const LINKS = [
   { href: "/engenharia", rotulo: "Máquinas" },
@@ -14,7 +17,7 @@ export default function LayoutEngenharia({ children }: LayoutProps<"/engenharia"
   return (
     <Protegido papeis={["engenharia"]}>
       <Cabecalho titulo="Engenharia" links={LINKS} />
-      <main className="mx-auto w-full max-w-6xl flex-1 p-4">{children}</main>
+      <main id="conteudo" className="mx-auto w-full max-w-6xl flex-1 p-4">{children}</main>
     </Protegido>
   );
 }

@@ -1,3 +1,4 @@
+import { StarIcon, TriangleAlertIcon } from "lucide-react";
 import { estourouMeta, prioridadeAtual } from "@/lib/prioridade";
 import { formatarHora, formatarMinutos } from "@/lib/tempo";
 import type { Chamado, ConfigPriorizacao } from "@/lib/tipos";
@@ -66,8 +67,8 @@ export function CartaoChamado({
     >
       <div className="grid min-w-0 flex-1 gap-1">
         {rotulo && (
-          <div className="w-fit rounded-full bg-moura-amarelo px-2.5 py-0.5 text-[0.7em] font-bold tracking-wider text-moura-azul uppercase">
-            ★ {rotulo}
+          <div className="inline-flex w-fit items-center gap-1 rounded-full bg-moura-amarelo px-2.5 py-0.5 text-[0.7em] font-bold tracking-wider text-moura-azul uppercase">
+            <StarIcon className="size-[1.1em] fill-current" aria-hidden /> {rotulo}
           </div>
         )}
         <div className="flex flex-wrap items-center gap-2">
@@ -77,8 +78,9 @@ export function CartaoChamado({
             {c.maquinaNome} · {c.subdivisaoNome}
           </span>
           {c.riscoPessoas && (
-            <span className="text-red-600" title="Risco a pessoas" aria-label="Risco a pessoas">
-              ⚠
+            <span className="inline-flex items-center text-red-600 dark:text-red-400" title="Risco a pessoas">
+              <TriangleAlertIcon className="size-[1.1em]" aria-hidden />
+              <span className="sr-only">Risco a pessoas</span>
             </span>
           )}
         </div>

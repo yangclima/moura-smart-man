@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Acionamento da Manutenção",
+  title: { default: "Acionamento da Manutenção", template: "%s · Acionamento Moura" },
   description: "Chamados de manutenção por QR Code, com rastreabilidade e priorização",
 };
 
@@ -37,6 +37,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" className={`${geistSans.variable} ${barlow.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
+        <a
+          href="#conteudo"
+          className="sr-only z-50 rounded-lg bg-moura-amarelo font-semibold text-moura-azul shadow-lg focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:px-4 focus:py-2"
+        >
+          Pular para o conteúdo
+        </a>
         <ProvedorUsuario>
           <AvisoConfiguracao />
           {children}

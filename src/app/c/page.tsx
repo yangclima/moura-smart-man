@@ -15,7 +15,7 @@ export default function EscolherMaquina() {
   const maquinas = dados.filter((m) => m.ativo).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
 
   return (
-    <main className="mx-auto grid w-full max-w-lg content-start gap-5 p-4 pb-10">
+    <main id="conteudo" className="mx-auto grid w-full max-w-lg content-start gap-5 p-4 pb-10">
       <section className="relative overflow-hidden rounded-2xl bg-moura-azul p-5 text-white shadow-md">
         <div className="absolute inset-y-0 right-0 w-2 bg-moura-amarelo" aria-hidden />
         <h1 className="text-3xl font-bold">Chamar a manutenção</h1>

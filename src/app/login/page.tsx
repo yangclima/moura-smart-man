@@ -49,7 +49,7 @@ export default function Login() {
     <div className="grid flex-1 lg:grid-cols-[1fr_minmax(28rem,36rem)]">
       <PainelMarca />
 
-      <main className="flex flex-col bg-card">
+      <main id="conteudo" className="flex flex-col bg-card">
         <FaixaMoura className="lg:hidden" />
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 px-5 py-8">
           <div className="grid justify-items-center gap-4 text-center">

@@ -67,7 +67,7 @@ export function AbrirChamado({ params, searchParams }: Props) {
 }
 
 function Tela({ children }: { children: React.ReactNode }) {
-  return <main className="mx-auto grid w-full max-w-lg content-start gap-7 p-4 pb-8">{children}</main>;
+  return <main id="conteudo" className="mx-auto grid w-full max-w-lg content-start gap-7 p-4 pb-8">{children}</main>;
 }
 
 function Formulario({

@@ -15,7 +15,7 @@ const horas = (h: number | null) => (h === null ? null : formatarMinutos(h * MIN
 function Campo({ rotulo, children }: { rotulo: string; children: ReactNode }) {
   const vazio = children === null || children === undefined || children === "";
   return (
-    <div className="grid grid-cols-[9rem_1fr] gap-2 text-sm">
+    <div className="grid grid-cols-[minmax(6.5rem,9rem)_1fr] gap-2 text-sm">
       <dt className="text-muted-foreground">{rotulo}</dt>
       <dd className="break-words">{vazio ? "—" : children}</dd>
     </div>

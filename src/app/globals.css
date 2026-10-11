@@ -173,12 +173,39 @@
   }
   html {
     @apply font-sans;
+    color-scheme: light;
+    /* Âncoras e foco por teclado não ficam escondidos atrás do cabeçalho fixo. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  .dark {
+    color-scheme: dark;
+  }
+  ::selection {
+    background-color: color-mix(in oklch, var(--moura-amarelo) 55%, transparent);
+    color: var(--moura-marinho);
   }
   h1,
   h2,
   h3 {
     font-family: var(--font-heading);
     letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+  /* Toque no chão de fábrica: sem atraso de duplo toque e sem o flash cinza do navegador. */
+  a,
+  button,
+  label,
+  summary,
+  [role="button"],
+  [role="tab"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -232,4 +259,23 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .chegou { animation: none; outline: 4px solid var(--p1); }
+  /* Mantém as mudanças de estado, mas sem deslocamentos nem animações de entrada. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Lista com rolagem horizontal: esmaece as bordas para indicar que há mais itens. */
+.rolagem-horizontal {
+  scrollbar-width: none;
+  mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1.5rem), transparent 100%);
+}
+.rolagem-horizontal::-webkit-scrollbar { display: none; }
+@media (min-width: 48rem) {
+  .rolagem-horizontal { mask-image: none; }
 }

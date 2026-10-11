@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { CLASSES_CONCILIACAO, CONFIANCAS, type ClasseConciliacao, type Confianca, type EventoHistorico } from "@/lib/historico";
 import { precisaRevisao, ROTULOS_DIVERGENCIA, type FiltroLista } from "@/lib/indicadores-historico";
 import { formatarDataHora, formatarMinutos } from "@/lib/tempo";
+import { cn } from "@/lib/utils";
 import { COR_CLASSE, ROTULO_CONFIANCA } from "./QualidadeConciliacao";
 
 const POR_PAGINA = 20;
@@ -37,7 +38,7 @@ interface FiltroSelectProps {
 function FiltroSelect({ rotulo, valor, opcoes, onChange, largura = "w-44" }: FiltroSelectProps) {
   return (
     <Select value={valor ?? QUALQUER} onValueChange={(v) => onChange(v === QUALQUER ? undefined : v)}>
-      <SelectTrigger className={largura} aria-label={rotulo}>
+      <SelectTrigger className={cn(largura, "max-sm:w-auto max-sm:min-w-[calc(50%-0.25rem)] max-sm:flex-1")} aria-label={rotulo}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
@@ -54,9 +55,14 @@ function FiltroSelect({ rotulo, valor, opcoes, onChange, largura = "w-44" }: Fil
 
 function Chip({ children, onRemover }: { children: string; onRemover: () => void }) {
   return (
-    <Badge variant="secondary" className="h-7 gap-1 pr-1">
+    <Badge variant="secondary" className="h-7 gap-1 pr-1 pointer-coarse:h-9">
       {children}
-      <button type="button" onClick={onRemover} aria-label={`Remover filtro ${children}`} className="rounded-sm p-0.5 hover:bg-muted">
+      <button
+        type="button"
+        onClick={onRemover}
+        aria-label={`Remover filtro ${children}`}
+        className="rounded-sm p-0.5 transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none pointer-coarse:p-1.5"
+      >
         <XIcon className="size-3" />
       </button>
     </Badge>

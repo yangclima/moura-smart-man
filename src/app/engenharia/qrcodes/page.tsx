@@ -95,7 +95,7 @@ export default function QrCodes() {
 
   return (
     <>
-      <div className={`nao-imprimir grid gap-5 ${selecionadas.size > 0 ? "pb-24" : ""}`}>
+      <div className={`nao-imprimir grid gap-5 ${selecionadas.size > 0 ? "pb-36 sm:pb-24" : ""}`}>
         <div className="grid gap-1">
           <h1 className="text-3xl font-bold text-moura-azul">Etiquetas QR</h1>
           <p className="text-sm text-muted-foreground">
@@ -141,7 +141,7 @@ export default function QrCodes() {
                   <XIcon className="size-4" />
                 </button>
               ) : (
-                <kbd className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 rounded border bg-muted px-1.5 font-mono text-xs text-muted-foreground">
+                <kbd className="pointer-coarse:hidden pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 rounded border bg-muted px-1.5 font-mono text-xs text-muted-foreground">
                   /
                 </kbd>
               )}
@@ -151,7 +151,7 @@ export default function QrCodes() {
                 value={filtro.linha ?? TODAS_LINHAS}
                 onValueChange={(v) => setFiltro((f) => ({ ...f, linha: v === TODAS_LINHAS ? null : v }))}
               >
-                <SelectTrigger className="h-11 w-44" aria-label="Linha">
+                <SelectTrigger className="h-11 w-44 max-sm:w-full" aria-label="Linha">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -215,7 +215,7 @@ export default function QrCodes() {
 
       {selecionadas.size > 0 && (
         <div className="nao-imprimir fixed inset-x-0 bottom-0 z-30 border-t bg-card/95 shadow-[0_-4px_16px_rgb(0_0_0/0.08)] backdrop-blur">
-          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-3 p-3">
+          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-3 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
             <span className="font-medium tabular-nums">{selecionadas.size} etiqueta(s) selecionada(s)</span>
             <Button variant="ghost" size="sm" onClick={() => setFiltro((f) => ({ ...f, soSelecionadas: !f.soSelecionadas }))}>
               {filtro.soSelecionadas ? "Ver todas" : "Ver selecionadas"}
