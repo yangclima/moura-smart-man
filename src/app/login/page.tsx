@@ -3,7 +3,7 @@
 import { ArrowRightIcon, DeleteIcon, Loader2Icon, QrCodeIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FaixaMoura, LogoMoura, SimboloMoura } from "@/components/marca/Marca";
 import { Button } from "@/components/ui/button";
 import { useUsuario } from "@/hooks/useUsuario";
@@ -23,6 +23,16 @@ export default function Login() {
   useEffect(() => {
     if (!carregando && usuario?.papel) router.replace(DESTINO_POR_PAPEL[usuario.papel]);
   }, [carregando, usuario, router]);
+
+  // Com cacheComponents o Next esconde a página (<Activity>) em vez de desmontá-la:
+  // sem isto, ao sair da conta o teclado voltaria travado em "Entrando…".
+  useLayoutEffect(() => {
+    return () => {
+      setPin("");
+      setEntrando(false);
+      setErro(null);
+    };
+  }, []);
 
   async function enviar(valor: string) {
     setEntrando(true);
